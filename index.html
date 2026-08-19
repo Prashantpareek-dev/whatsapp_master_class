@@ -1582,7 +1582,7 @@
                 transform .38s cubic-bezier(.34, 1.56, .64, 1),
                 box-shadow .22s ease,
                 border-color .22s ease;
-            transition-delay: calc(var(--i) * 60ms)
+            transition-delay: calc(var(--i) * 45ms)
         }
 
         .rv.on .aud-item {
@@ -1813,6 +1813,17 @@
         .mentor h3 span {
             color: var(--green);
             display: block
+        }
+
+        .mentor-role {
+            margin: -8px 0 16px;
+            font-size: clamp(13px, 1.4vw, 15px);
+            font-weight: 600;
+            color: #9dbdb0
+        }
+
+        .mentor-role b {
+            color: var(--green)
         }
 
         .mentor ul {
@@ -2229,10 +2240,10 @@
             padding: 18px 18px 0;
             display: grid;
             place-items: end center;
-            background:
+            /* background:
                 radial-gradient(70% 60% at 50% 45%, rgba(37, 211, 102, .22), transparent 65%),
-                linear-gradient(160deg, #10241d, #08120f);
-            border: 1px solid rgba(37, 211, 102, .2);
+                linear-gradient(160deg, #10241d, #08120f); */
+            /* border: 1px solid rgba(37, 211, 102, .2); */
             overflow: hidden
         }
 
@@ -2256,29 +2267,6 @@
             filter: drop-shadow(0 20px 30px rgba(0, 0, 0, .5))
         }
 
-        .mx-photo .mx-tag {
-            position: absolute;
-            left: 16px;
-            top: 16px;
-            z-index: 3;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 7px 14px;
-            border-radius: 999px;
-            background: rgba(37, 211, 102, .12);
-            border: 1px solid rgba(37, 211, 102, .4);
-            color: #fff;
-            font-size: 11.5px;
-            font-weight: 800;
-            letter-spacing: .1em;
-            text-transform: uppercase
-        }
-
-        .mx-photo .mx-tag i {
-            color: var(--green);
-            font-size: 15px
-        }
 
         .mx-chips {
             display: flex;
@@ -2410,31 +2398,96 @@
         }
 
         /* ---------- proof ---------- */
+        #proof {
+            position: relative;
+            overflow: hidden
+        }
+
+        #proof:before,
+        #proof:after {
+            content: "";
+            position: absolute;
+            width: 170px;
+            height: 170px;
+            background-image: radial-gradient(rgba(15, 157, 88, .16) 1.5px, transparent 1.5px);
+            background-size: 16px 16px;
+            pointer-events: none
+        }
+
+        #proof:before {
+            left: -30px;
+            top: 30px;
+            mask-image: linear-gradient(105deg, #000, transparent 70%)
+        }
+
+        #proof:after {
+            right: -30px;
+            bottom: 120px;
+            mask-image: linear-gradient(285deg, #000, transparent 70%)
+        }
+
         .proof {
             display: grid;
-            gap: 22px
+            gap: 26px
         }
 
-        .tsts {
-            display: grid;
-            gap: 14px
+        /* infinite right-to-left review marquee */
+        .revs {
+            position: relative;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent)
         }
 
-        @media(min-width:760px) {
-            .tsts {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 18px
+        .revs-track {
+            display: flex;
+            gap: 18px;
+            width: max-content;
+            animation: rev-slide 60s linear infinite
+        }
+
+        .revs:hover .revs-track,
+        .revs:focus-within .revs-track {
+            animation-play-state: paused
+        }
+
+        @keyframes rev-slide {
+            to {
+                transform: translateX(calc(-50% - 9px))
             }
         }
 
         .tst {
+            width: clamp(290px, 74vw, 430px);
+            flex: 0 0 auto;
+            position: relative;
             background: #fff;
             border: 1px solid var(--line);
-            border-radius: 5px;
+            border-radius: 8px;
             padding: 22px;
-            box-shadow: var(--shadow);
+            box-shadow: 0 16px 34px -26px rgba(11, 20, 26, .6);
             display: flex;
-            flex-direction: column
+            flex-direction: column;
+            transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease
+        }
+
+        .tst:hover {
+            transform: translateY(-4px);
+            border-color: #cfe8db;
+            box-shadow: 0 22px 40px -24px rgba(11, 20, 26, .5)
+        }
+
+        /* watermark quote */
+        .tst:after {
+            content: "\201C";
+            position: absolute;
+            right: 16px;
+            top: 6px;
+            font-size: 74px;
+            line-height: 1;
+            font-weight: 800;
+            color: rgba(37, 211, 102, .16);
+            pointer-events: none
         }
 
         .tst-top {
@@ -2454,14 +2507,14 @@
             font-size: 15px;
             letter-spacing: .02em;
             color: #fff;
-            background: linear-gradient(140deg, #2ee06f, #0f9d58);
-            box-shadow: var(--shadow-green)
+            background: radial-gradient(circle at 34% 28%, #3ff082, #0f9d58);
+            box-shadow: 0 0 0 5px rgba(37, 211, 102, .1)
         }
 
         .tst .stars {
-            color: #f5a623;
+            color: var(--green);
             font-size: 14px;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             margin: 12px 0 0
         }
 
@@ -2479,49 +2532,76 @@
         }
 
         .tst small {
-            color: var(--ink-soft);
+            color: var(--green-deep);
             font-size: 12.5px;
             font-weight: 600
         }
 
+        /* stats strip */
         .stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px
+            gap: 18px 0;
+            padding: 18px 6px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: linear-gradient(120deg, #f4fbf7, #ffffff 65%)
         }
 
         @media(min-width:760px) {
             .stats {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 18px
+                grid-template-columns: repeat(4, 1fr)
             }
         }
 
         .stat {
-            background: linear-gradient(165deg, #12291f, #0b1a17);
-            color: #fff;
-            border-radius: 5px;
-            padding: 18px 14px;
-            text-align: center
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 0 18px
+        }
+
+        .stat+.stat {
+            border-left: 1px solid var(--line)
+        }
+
+        @media(max-width:759px) {
+            .stat:nth-child(odd) {
+                border-left: 0
+            }
+        }
+
+        .stat .ico-round {
+            width: 56px;
+            height: 56px;
+            flex: 0 0 auto;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 26px;
+            color: var(--green-deep);
+            background: radial-gradient(circle at 35% 25%, #eafff2, #ddf3e6)
         }
 
         .stat .v {
-            font-size: clamp(22px, 3.4vw, 30px);
+            display: block;
+            font-size: clamp(20px, 3vw, 28px);
             font-weight: 900;
-            color: var(--green);
-            letter-spacing: -.02em
+            color: var(--green-deep);
+            letter-spacing: -.02em;
+            line-height: 1.1
         }
 
         .stat b {
             display: block;
             font-size: 12.5px;
             font-weight: 600;
-            color: #bcd3ca;
-            margin-top: 4px
+            color: var(--ink-soft);
+            margin-top: 2px
         }
 
         .logos {
-            margin-top: 36px;
+            margin-top: 30px;
             overflow: hidden;
             -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
             mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)
@@ -2529,32 +2609,57 @@
 
         .logos .track {
             display: flex;
-            gap: 60px;
-            align-items: center;
+            gap: 18px;
+            align-items: stretch;
             width: max-content;
             animation: slide 34s linear infinite
         }
 
+        .logos:hover .track {
+            animation-play-state: paused
+        }
+
         .logos img {
-            height: 64px;
+            height: 72px;
             width: auto;
+            min-width: 150px;
             object-fit: contain;
-            transition: transform .2s ease
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 12px 20px;
+            box-shadow: 0 14px 30px -26px rgba(11, 20, 26, .6);
+            transition: transform .2s ease, border-color .2s ease
         }
 
         @media(min-width:760px) {
             .logos img {
-                height: 84px
+                height: 92px;
+                min-width: 190px
             }
         }
 
         .logos img:hover {
-            transform: scale(1.06)
+            transform: translateY(-3px);
+            border-color: #cfe8db
         }
 
         @keyframes slide {
             to {
                 transform: translateX(-50%)
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            .revs-track,
+            .logos .track {
+                animation: none
+            }
+
+            .revs,
+            .logos {
+                overflow-x: auto
             }
         }
 
@@ -3780,7 +3885,7 @@
 
             <div class="mx rv">
                 <div class="mx-photo">
-                    <img src="Images/profile.webp" alt="Dipanshu Vijay — Business Automation Expert" loading="lazy"
+                    <img src="Images/me.webp" alt="Dipanshu Vijay — Business Automation Expert" loading="lazy"
                         width="520" height="480" />
                 </div>
 
@@ -3839,13 +3944,16 @@
                     <div class="mentor-body">
                         <span class="kicker"><i class="ph-bold ph-user-circle"></i> आपके <b>Mentor</b></span>
                         <h3>DV Sir – <span>Dipanshu Vijay</span></h3>
+                        <p class="mentor-role">Business Automation Expert · Trusted by <b>1,20,000+</b> Business Owners
+                        </p>
                         <ul>
-                            <li><i class="ph-bold ph-check-circle"></i><span>Digital Automation Expert</span></li>
-                            <li><i class="ph-bold ph-check-circle"></i><span>WhatsApp Business API Expert</span></li>
-                            <li><i class="ph-bold ph-check-circle"></i><span>Helped 1000+ Businesses Automate &amp;
-                                    Scale</span></li>
-                            <li><i class="ph-bold ph-check-circle"></i><span>Trainer, Mentor &amp; Business Growth
-                                    Strategist</span></li>
+                            <li><i class="ph-bold ph-check-circle"></i><span>CA, CMA &amp; Author</span></li>
+                            <li><i class="ph-bold ph-check-circle"></i><span>TEDx Speaker &amp; Guinness World Record
+                                    Holder</span></li>
+                            <li><i class="ph-bold ph-check-circle"></i><span>16+ Years in Business Process
+                                    Automation</span></li>
+                            <li><i class="ph-bold ph-check-circle"></i><span>Sales Systems, Lead Management &amp;
+                                    Business Growth</span></li>
                         </ul>
                         <div class="mentor-sign">
                             <img class="sign" src="Images/sign.webp" alt="Dipanshu Vijay signature" loading="lazy" />
@@ -3853,17 +3961,18 @@
                     </div>
 
                     <div class="mentor-stats">
-                        <div class="mstat"><i class="ph-bold ph-users-three"></i>
-                            <div><span class="v">1000+</span><span class="l">Businesses<br />Empowered</span></div>
+                        <div class="mstat"><i class="ph-bold ph-clock-countdown"></i>
+                            <div><span class="v">16+</span><span class="l">Years of<br />Experience</span></div>
                         </div>
-                        <div class="mstat"><i class="ph-bold ph-trend-up"></i>
-                            <div><span class="v">10M+</span><span class="l">Messages<br />Automated</span></div>
+                        <div class="mstat"><i class="ph-bold ph-users-three"></i>
+                            <div><span class="v">1,20,000+</span><span class="l">Business Owners<br />Helped</span>
+                            </div>
+                        </div>
+                        <div class="mstat"><i class="ph-bold ph-map-pin-line"></i>
+                            <div><span class="v">55+</span><span class="l">Cities<br />Covered</span></div>
                         </div>
                         <div class="mstat"><i class="ph-bold ph-buildings"></i>
-                            <div><span class="v">50+</span><span class="l">Industries<br />Served</span></div>
-                        </div>
-                        <div class="mstat"><i class="ph-bold ph-trophy"></i>
-                            <div><span class="v">5+</span><span class="l">Years of<br />Experience</span></div>
+                            <div><span class="v">45+</span><span class="l">Industries<br />Served</span></div>
                         </div>
                     </div>
                 </div>
@@ -3990,80 +4099,98 @@
     <!-- ========== PROOF ========== -->
     <section class="sec" id="proof">
         <div class="wrap">
-            <div class="sec-head rv">
+            <div class="sec-head head-center rv">
+                <span class="eyebrow eyebrow-light"><i class="ph-bold ph-shield-check"></i> Trusted &amp; Loved</span>
                 <h2 class="sec-title">Trusted by <span class="gr">1000+</span> Business Owners</h2>
+                <p class="sec-sub">देशभर के <span class="gr">Business Owners</span> का <b>भरोसा</b>, हमारी सबसे बड़ी
+                    ताकत!</p>
+                <div class="title-flourish" aria-hidden="true"></div>
             </div>
+
             <div class="proof">
-                <div class="tsts rv">
-                    <article class="tst">
-                        <div class="tst-top">
-                            <span class="av">DS</span>
-                            <div>
-                                <b>Dr. Deepika Singhal &amp; Rahul Singhal</b>
-                                <small>CEO, Packaging India</small>
+                <!-- auto-scrolling reviews, right to left, loops forever -->
+                <div class="revs rv">
+                    <div class="revs-track" id="revTrack">
+                        <article class="tst">
+                            <div class="tst-top">
+                                <span class="av">DS</span>
+                                <div>
+                                    <b>Dr. Deepika Singhal &amp; Rahul Singhal</b>
+                                    <small>CEO, Packaging India</small>
+                                </div>
                             </div>
-                        </div>
-                        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                        <p>We tried many WhatsApp solutions and agencies, but they always stopped working or fell short,
-                            leaving us worried about our number getting blocked.</p>
-                        <p>With Dipanshu&rsquo;s Automation Systems, everything changed! We now deliver a delightful
-                            customer experience and consistently generate new leads. It&rsquo;s been over 2.5 years
-                            without any blocks, and it works flawlessly!</p>
-                    </article>
-                    <article class="tst">
-                        <div class="tst-top">
-                            <span class="av">SK</span>
-                            <div>
-                                <b>Sushant Kalra</b>
-                                <small>Founder of Parwarish</small>
+                            <div class="stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                            <p>We tried many WhatsApp solutions and agencies, but they always stopped working or fell
+                                short, leaving us worried about our number getting blocked.</p>
+                            <p>With Dipanshu&rsquo;s Automation Systems, everything changed! We now deliver a delightful
+                                customer experience and consistently generate new leads. It&rsquo;s been over 2.5 years
+                                without any blocks, and it works flawlessly!</p>
+                        </article>
+                        <article class="tst">
+                            <div class="tst-top">
+                                <span class="av">SK</span>
+                                <div>
+                                    <b>Sushant Kalra</b>
+                                    <small>Founder of Parwarish</small>
+                                </div>
                             </div>
-                        </div>
-                        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                        <p>I was initially skeptical about using WhatsApp Official API for promoting my courses. I
-                            wondered if it would really help connect with parents in a meaningful way. But the results
-                            have been phenomenal! The seamless communication and automated follow-ups have not only
-                            saved time but have also boosted engagement with parents.</p>
-                    </article>
-                    <article class="tst">
-                        <div class="tst-top">
-                            <span class="av">AB</span>
-                            <div>
-                                <b>Anand Bajoria</b>
-                                <small>President, Skicorp Group, Kolkata</small>
+                            <div class="stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                            <p>I was initially skeptical about using WhatsApp Official API for promoting my courses. I
+                                wondered if it would really help connect with parents in a meaningful way. But the
+                                results have been phenomenal! The seamless communication and automated follow-ups have
+                                not only saved time but have also boosted engagement with parents.</p>
+                        </article>
+                        <article class="tst">
+                            <div class="tst-top">
+                                <span class="av">AB</span>
+                                <div>
+                                    <b>Anand Bajoria</b>
+                                    <small>President, Skicorp Group, Kolkata</small>
+                                </div>
                             </div>
-                        </div>
-                        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                        <p>Earlier messages used to go after 2 days of event. This time got help from Team of Dipanshu
-                            for WhatsApp Automation. Even competitors were surprised how beautifully we were engaging
-                            with visitors in Auto Mode and getting consistent leads!</p>
-                    </article>
-                    <article class="tst">
-                        <div class="tst-top">
-                            <span class="av">RN</span>
-                            <div>
-                                <b>Rohit Surendra Nagia</b>
-                                <small>MDA Pvt Ltd, New Delhi &mdash; India&rsquo;s leading Architectural &amp; Interior
-                                    design firm</small>
+                            <div class="stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                            <p>Earlier messages used to go after 2 days of event. This time got help from Team of
+                                Dipanshu for WhatsApp Automation. Even competitors were surprised how beautifully we
+                                were engaging with visitors in Auto Mode and getting consistent leads!</p>
+                        </article>
+                        <article class="tst">
+                            <div class="tst-top">
+                                <span class="av">RN</span>
+                                <div>
+                                    <b>Rohit Surendra Nagia</b>
+                                    <small>MDA Pvt Ltd, New Delhi &mdash; India&rsquo;s leading Architectural &amp;
+                                        Interior design firm</small>
+                                </div>
                             </div>
-                        </div>
-                        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                        <p>I never saw value in WhatsApp automation for our interior design business until
-                            Dipanshu&rsquo;s team custom-fitted it to our buyer journey.</p>
-                        <p>Now, clients appreciate our messages, trust builds effortlessly, and conversions happen
-                            seamlessly. The system works flawlessly without manual effort.</p>
-                    </article>
+                            <div class="stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                            <p>I never saw value in WhatsApp automation for our interior design business until
+                                Dipanshu&rsquo;s team custom-fitted it to our buyer journey.</p>
+                            <p>Now, clients appreciate our messages, trust builds effortlessly, and conversions happen
+                                seamlessly. The system works flawlessly without manual effort.</p>
+                        </article>
+                    </div>
                 </div>
+
                 <div class="stats rv" id="counters">
-                    <div class="stat"><span class="v" data-to="1000" data-suffix="+">0</span><b>Businesses Helped</b>
+                    <div class="stat">
+                        <span class="ico-round"><i class="ph-bold ph-users-three"></i></span>
+                        <div><span class="v" data-to="1000" data-suffix="+">0</span><b>Business Empowered</b></div>
                     </div>
-                    <div class="stat"><span class="v" data-to="500" data-suffix="M+">0</span><b>Messages Automated</b>
+                    <div class="stat">
+                        <span class="ico-round"><i class="ph-bold ph-paper-plane-tilt"></i></span>
+                        <div><span class="v" data-to="500" data-suffix="M+">0</span><b>Messages Automated</b></div>
                     </div>
-                    <div class="stat"><span class="v" data-to="20" data-suffix="+">0</span><b>Industries Served</b>
+                    <div class="stat">
+                        <span class="ico-round"><i class="ph-bold ph-buildings"></i></span>
+                        <div><span class="v" data-to="20" data-suffix="+">0</span><b>Industries Served</b></div>
                     </div>
-                    <div class="stat"><span class="v" data-to="100" data-suffix="%">0</span><b>Satisfaction Rate</b>
+                    <div class="stat">
+                        <span class="ico-round"><i class="ph-bold ph-graduation-cap"></i></span>
+                        <div><span class="v" data-to="100" data-suffix="%">0</span><b>Satisfaction Rate</b></div>
                     </div>
                 </div>
             </div>
+
             <div class="logos rv">
                 <div class="track" id="logoTrack"></div>
             </div>
@@ -4154,6 +4281,16 @@
                 return i;
             }
             nums.concat(nums).forEach(function (n) { track.appendChild(logoImg(n)); }); /* duplicated for seamless loop */
+
+            /* ---- reviews marquee: clone the set once so the loop never ends ---- */
+            var revTrack = document.getElementById('revTrack');
+            if (revTrack) {
+                Array.prototype.slice.call(revTrack.children).forEach(function (card) {
+                    var clone = card.cloneNode(true);
+                    clone.setAttribute('aria-hidden', 'true');
+                    revTrack.appendChild(clone);
+                });
+            }
 
             /* ---- urgency ticker ---- */
             var tick = document.getElementById('tickerTrack');
