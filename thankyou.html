@@ -265,7 +265,7 @@
             gap: 14px;
             margin-top: clamp(24px, 3.6vw, 34px);
             padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, .09)
+            /* border-top: 1px solid rgba(255, 255, 255, .09) */
         }
 
         .foot img {
@@ -299,6 +299,348 @@
                 transform: none
             }
         }
+
+        /* ---------- e-ticket ---------- */
+        .ticket {
+            position: relative;
+            z-index: 2;
+            margin-top: clamp(26px, 4vw, 40px);
+            border: 1px solid rgba(37, 211, 102, .22);
+            border-radius: 10px;
+            background: linear-gradient(160deg, rgba(255, 255, 255, .045), rgba(255, 255, 255, .015));
+            overflow: hidden
+        }
+
+        .tk-top {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px clamp(16px, 2.6vw, 24px);
+            border-bottom: 1px dashed rgba(37, 211, 102, .3);
+            background: rgba(37, 211, 102, .07)
+        }
+
+        .tk-kicker {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 5px
+        }
+
+        .tk-top b {
+            font-size: clamp(15px, 1.9vw, 18px);
+            line-height: 1.3
+        }
+
+        .tk-id {
+            font-size: 11px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: #86a99a;
+            font-weight: 600;
+            text-align: right
+        }
+
+        .tk-id span {
+            display: block;
+            margin-top: 4px;
+            font-size: 15px;
+            letter-spacing: .06em;
+            color: #fff;
+            font-weight: 800
+        }
+
+        .tk-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(18px, 3vw, 30px);
+            padding: clamp(18px, 2.8vw, 26px) clamp(16px, 2.6vw, 24px)
+        }
+
+        @media(max-width:720px) {
+            .tk-body {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .tk-col h3 {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 12px
+        }
+
+        .tk-col+.tk-col {
+            border-left: 1px dashed rgba(255, 255, 255, .12);
+            padding-left: clamp(18px, 3vw, 30px)
+        }
+
+        @media(max-width:720px) {
+            .tk-col+.tk-col {
+                border-left: 0;
+                border-top: 1px dashed rgba(255, 255, 255, .12);
+                padding-left: 0;
+                padding-top: 20px
+            }
+        }
+
+        .tk-list {
+            margin: 0;
+            display: grid;
+            gap: 10px
+        }
+
+        .tk-list>div {
+            display: grid;
+            grid-template-columns: 96px 1fr;
+            gap: 10px;
+            align-items: baseline
+        }
+
+        .tk-list dt {
+            font-size: 12.5px;
+            color: #86a99a;
+            font-weight: 600
+        }
+
+        .tk-list dd {
+            margin: 0;
+            font-size: 14.5px;
+            font-weight: 700;
+            color: #fff;
+            word-break: break-word
+        }
+
+        .tk-list dd small {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: #9fbcaf;
+            margin-top: 2px
+        }
+
+        .tk-zoom {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, .09);
+            display: grid;
+            gap: 10px
+        }
+
+        .tk-zoom a.zlink {
+            font-size: 12.5px;
+            color: #9ce8bd;
+            word-break: break-all;
+            text-decoration: none;
+            line-height: 1.5
+        }
+
+        .tk-zoom a.zlink:hover {
+            text-decoration: underline
+        }
+
+        .tk-price {
+            display: grid;
+            gap: 8px;
+            padding: clamp(16px, 2.4vw, 22px) clamp(16px, 2.6vw, 24px);
+            border-top: 1px dashed rgba(37, 211, 102, .3);
+            background: rgba(0, 0, 0, .18)
+        }
+
+        .tk-price .row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 14px;
+            color: #cfe3da
+        }
+
+        .tk-price .row s {
+            color: #8fa79c
+        }
+
+        .tk-price .row .free {
+            color: var(--green);
+            font-weight: 800;
+            letter-spacing: .04em
+        }
+
+        .tk-price .total {
+            margin-top: 6px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, .12);
+            font-size: clamp(16px, 2.1vw, 19px);
+            font-weight: 800;
+            color: #fff
+        }
+
+        .tk-price .total span:last-child {
+            color: var(--green)
+        }
+
+        .tk-banner {
+            display: block;
+            border-top: 1px solid rgba(255, 255, 255, .09)
+        }
+
+        .tk-banner img {
+            display: block;
+            width: 100%;
+            height: auto
+        }
+
+        .tk-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: clamp(16px, 2.4vw, 22px) clamp(16px, 2.6vw, 24px)
+        }
+
+        .tk-actions .btn[disabled] {
+            cursor: progress
+        }
+
+        .tk-actions .ph-circle-notch {
+            display: inline-block;
+            animation: spin 1s linear infinite
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        /* ---------- pdf preview modal ---------- */
+        .pv {
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            display: grid;
+            place-items: center;
+            padding: clamp(10px, 2vw, 24px);
+            background: rgba(4, 10, 8, .74);
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px)
+        }
+
+        .pv[hidden] {
+            display: none
+        }
+
+        .pv-box {
+            width: min(780px, 100%);
+            max-width: 100%;
+            min-width: 0;
+            max-height: 92dvh;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(37, 211, 102, .22);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #0d1f1a;
+            box-shadow: var(--shadow-lg)
+        }
+
+        .pv-hd {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, .09)
+        }
+
+        .pv-hd b {
+            font-size: 14.5px
+        }
+
+        .pv-hd span {
+            display: block;
+            margin-top: 3px;
+            font-size: 11.5px;
+            color: #86a99a
+        }
+
+        .pv-x {
+            flex: none;
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border: 0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            color: #dcece5;
+            background: rgba(255, 255, 255, .06)
+        }
+
+        .pv-x:hover {
+            background: rgba(255, 255, 255, .12)
+        }
+
+        .pv-body {
+            flex: 1;
+            overflow: auto;
+            padding: clamp(10px, 2vw, 18px);
+            background: #08120f
+        }
+
+        .pv-fit {
+            position: relative;
+            width: 100%;
+            overflow: hidden
+        }
+
+        /* page out-of-flow रखा है ताकि उसकी fixed width modal को चौड़ा न कर दे —
+           उसे JS viewport के हिसाब से scale करता है */
+        .pv-page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 728px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 6px;
+            transform-origin: top left;
+            box-shadow: 0 18px 50px -24px #000
+        }
+
+        .pv-ft {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-end;
+            padding: 14px 18px;
+            border-top: 1px solid rgba(255, 255, 255, .09)
+        }
+
+        .pv-ft .btn {
+            padding: 13px 20px;
+            font-size: 14px
+        }
+
+        .pv-ft .ph-circle-notch {
+            display: inline-block;
+            animation: spin 1s linear infinite
+        }
+
+        .tk-note {
+            font-size: 12px;
+            color: #86a99a;
+            padding: 0 clamp(16px, 2.6vw, 24px) clamp(16px, 2.4vw, 22px);
+            line-height: 1.6
+        }
+
     </style>
 </head>
 
@@ -339,20 +681,116 @@
                 </div>
             </div>
 
-            <div class="cta-row">
-                <a class="btn btn-primary" id="waBtn" href="#" hidden>
-                    <i class="ph-bold ph-whatsapp-logo"></i> WhatsApp पर message देखें
-                </a>
-                <a class="btn btn-ghost" href="index.html">
-                    <i class="ph-bold ph-arrow-left"></i> Masterclass page पर वापस जाएँ
-                </a>
-            </div>
+            <section class="ticket" id="ticket">
+                <div class="tk-top">
+                    <div>
+                        <span class="tk-kicker"><i class="ph-bold ph-ticket"></i> Confirmed E-Ticket</span>
+                        <b>Automate &amp; Scale with WhatsApp — Live Masterclass</b>
+                    </div>
+                    <div class="tk-id">Ticket ID<span id="tkId">DV-000000</span></div>
+                </div>
+
+                <div class="tk-body">
+                    <div class="tk-col">
+                        <h3>Attendee Details</h3>
+                        <dl class="tk-list">
+                            <div><dt>Name</dt>
+                                <dd id="tkName">—</dd>
+                            </div>
+                            <div><dt>WhatsApp</dt>
+                                <dd id="tkPhone">—</dd>
+                            </div>
+                            <div><dt>Email</dt>
+                                <dd id="tkEmail">—</dd>
+                            </div>
+                            <div><dt>Industry</dt>
+                                <dd id="tkIndustry">—</dd>
+                            </div>
+                            <div><dt>Status</dt>
+                                <dd style="color:var(--green)">CONFIRMED</dd>
+                            </div>
+                        </dl>
+                    </div>
+
+                    <div class="tk-col">
+                        <h3>Webinar Details</h3>
+                        <dl class="tk-list">
+                            <div><dt>Date</dt>
+                                <dd id="tkDate">25th August 2026<small id="tkDay">Tuesday</small></dd>
+                            </div>
+                            <div><dt>Time</dt>
+                                <dd>5:00 PM IST<small>Sharp &amp; on time</small></dd>
+                            </div>
+                            <div><dt>Duration</dt>
+                                <dd>60 Minutes<small>Live + Q&amp;A</small></dd>
+                            </div>
+                            <div><dt>Platform</dt>
+                                <dd>Zoom (Online)<small>Webinar ID: 821 2031 3197</small></dd>
+                            </div>
+                        </dl>
+                        <div class="tk-zoom">
+                            <a class="btn btn-primary" id="zoomBtn"
+                                href="https://us06web.zoom.us/webinar/register/WN_niEhINQWTk-VNDwgB23_Tw"
+                                target="_blank" rel="noopener"><i class="ph-bold ph-video-camera"></i> Zoom Link खोलें</a>
+                            <!-- <a class="zlink"
+                                href="https://us06web.zoom.us/webinar/register/WN_niEhINQWTk-VNDwgB23_Tw"
+                                target="_blank"
+                                rel="noopener"></a> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tk-price">
+                    <div class="row"><span>Masterclass Fee</span><span><s>&#8377;499</s></span></div>
+                    <div class="row"><span>Special Discount (100%)</span><span class="free">− &#8377;499 &nbsp;·&nbsp;
+                            FREE</span></div>
+                    <div class="row total"><span>Total Payable</span><span>&#8377;0</span></div>
+                </div>
+
+                <!-- <div class="tk-banner" id="tkBanner">
+                    <img src="Images/banner.webp" alt="Automate &amp; Scale with WhatsApp Masterclass — 5 PM"
+                        onerror="var b=document.getElementById('tkBanner');if(b)b.style.display='none'" />
+                </div> -->
+
+                <div class="tk-actions">
+                    <button type="button" class="btn btn-primary" id="dlTicket"><i class="ph-bold ph-download-simple"></i>
+                        Download Ticket PDF</button>
+                    <button type="button" class="btn btn-ghost" id="dlGuide"><i class="ph-bold ph-shield-check"></i>
+                        Download Protection Guide PDF</button>
+                </div>
+                <!-- <p class="tk-note">दोनों PDF सीधे आपके device में download हो जाएँगी — कोई print dialog नहीं.</p> -->
+            </section>
 
             <div class="foot">
                 <img src="Images/profile.webp" alt="Dipanshu Vijay" width="1024" height="926" />
                 <div>
                     <b>Dipanshu Vijay</b>
-                    <span>Your Automation Coach</span>
+                    <span>Business Automation Expert</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="pv" id="pv" hidden>
+            <div class="pv-box" role="dialog" aria-modal="true" aria-labelledby="pvTitle">
+                <div class="pv-hd">
+                    <div>
+                        <b id="pvTitle">Preview</b>
+                        <span id="pvSub"></span>
+                    </div>
+                    <button type="button" class="pv-x" data-close aria-label="Close"><i
+                            class="ph-bold ph-x"></i></button>
+                </div>
+                <div class="pv-body">
+                    <div class="pv-fit" id="pvFit">
+                        <div class="pv-page" id="pvPage">
+                            <div class="pdfdoc" id="pvDoc"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pv-ft">
+                    <button type="button" class="btn btn-ghost" data-close>बंद करें</button>
+                    <button type="button" class="btn btn-primary" id="pvSave"><i
+                            class="ph-bold ph-download-simple"></i> Download PDF</button>
                 </div>
             </div>
         </div>
@@ -360,27 +798,432 @@
 
     <script>
         (function () {
+            "use strict";
+
+            /* ---------- next live session ----------
+               हर हफ़्ते Tuesday और Friday, 5 PM IST. उस दिन 5 PM निकलते ही
+               page अपने आप अगली session की date दिखाने लगता है. */
+            var SESSION_DAYS = [2, 5];   /* 2 = Tuesday, 5 = Friday */
+            var SESSION_HOUR = 17;       /* 5 PM IST */
+
+            var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            var WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+            function isSessionDay(d) { return SESSION_DAYS.indexOf(d) !== -1; }
+
+            /* IST wall-clock — visitor का timezone कुछ भी हो, UTC+5:30 पर shift करके UTC getters पढ़ते हैं */
+            function nextSession() {
+                var ist = new Date(Date.now() + 5.5 * 3600 * 1000);
+                var d = new Date(Date.UTC(ist.getUTCFullYear(), ist.getUTCMonth(), ist.getUTCDate()));
+                if (!(isSessionDay(ist.getUTCDay()) && ist.getUTCHours() < SESSION_HOUR)) {
+                    do { d.setUTCDate(d.getUTCDate() + 1); } while (!isSessionDay(d.getUTCDay()));
+                }
+                return d;
+            }
+
+            function ordinal(n) {
+                var s = ['th', 'st', 'nd', 'rd'], v = n % 100;
+                return n + (s[(v - 20) % 10] || s[v] || s[0]);
+            }
+
+            var NEXT = nextSession();
+            var NEXT_DAY = WEEKDAYS[NEXT.getUTCDay()];
+            var NEXT_DATE = ordinal(NEXT.getUTCDate()) + ' ' + MONTHS[NEXT.getUTCMonth()] + ' ' + NEXT.getUTCFullYear();
+
+            var WEBINAR = {
+                title: 'Automate & Scale with WhatsApp — Live Masterclass',
+                date: NEXT_DATE + ' (' + NEXT_DAY + ')',
+                time: '5:00 PM IST',
+                duration: '60 Minutes (Live + Q&A)',
+                platform: 'Zoom (Online)',
+                zoomId: '821 2031 3197',
+                zoomLink: 'https://us06web.zoom.us/webinar/register/WN_niEhINQWTk-VNDwgB23_Tw'
+            };
+
+            /* landing page का absolute URL — PDF कहीं भी खुले, link सही रहे */
+            var SITE_URL = (function () {
+                try { return new URL('index.html#register', location.href).href; }
+                catch (e) { return 'https://wa.dipanshuvijay.in/wa-automation/'; }
+            })();
+
             /* set this to the WhatsApp chat/group link to show the primary CTA */
             var WA_LINK = '';
-
             var wa = document.getElementById('waBtn');
-            if (WA_LINK) { wa.href = WA_LINK; wa.hidden = false; }
+            if (WA_LINK && wa) { wa.href = WA_LINK; wa.hidden = false; }
 
-            /* greet by first name — passed as ?n= by the form, or kept in sessionStorage */
-            var name = '';
-            try {
-                name = new URLSearchParams(location.search).get('n') || '';
-                if (!name) {
-                    var saved = JSON.parse(sessionStorage.getItem('dv_lead') || '{}');
-                    name = (saved.full_name || '').split(' ')[0] || '';
-                }
-            } catch (e) { }
+            /* ---------- lead data ---------- */
+            var lead = {};
+            try { lead = JSON.parse(sessionStorage.getItem('dv_lead') || '{}') || {}; } catch (e) { lead = {}; }
 
-            name = name.replace(/[^A-Za-zऀ-ॿ .'-]/g, '').trim().slice(0, 24);
-            if (name) {
-                document.getElementById('tyTitle').innerHTML =
-                    name.replace(/</g, '&lt;') + ', आपकी Seat <span>Reserve हो गई है</span>';
+            var qs;
+            try { qs = new URLSearchParams(location.search); } catch (e) { qs = null; }
+            function q(k) { try { return (qs && qs.get(k)) || ''; } catch (e) { return ''; } }
+
+            function clean(v, max) {
+                return String(v == null ? '' : v).replace(/[<>]/g, '').trim().slice(0, max || 80);
             }
+
+            var full = clean(lead.full_name || q('n'), 60);
+            var phone = clean(lead.whatsapp_number || q('p'), 20);
+            var email = clean(lead.email || q('e'), 60);
+            var industry = clean(lead.business_industry, 60);
+
+            var attendee = {
+                name: full || '—',
+                phone: phone || '—',
+                email: email || '—',
+                industry: industry || '—'
+            };
+
+            /* ticket id — stable for the same lead, readable on the PDF */
+            function ticketId() {
+                var seed = (phone || email || full || 'guest');
+                var h = 0;
+                for (var i = 0; i < seed.length; i++) { h = (h * 31 + seed.charCodeAt(i)) >>> 0; }
+                var digits = String(h).slice(-6);
+                while (digits.length < 6) digits = '0' + digits;
+                return 'DV-' + digits;
+            }
+
+            function set(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; }
+            set('tkName', attendee.name);
+            set('tkPhone', attendee.phone);
+            set('tkEmail', attendee.email);
+            set('tkIndustry', attendee.industry);
+            var TID = ticketId();
+            set('tkId', TID);
+
+            var dateEl = document.getElementById('tkDate');
+            if (dateEl) {
+                dateEl.firstChild.nodeValue = NEXT_DATE;
+                set('tkDay', NEXT_DAY);
+            }
+
+            /* greet by first name */
+            var first = (full.split(' ')[0] || '').replace(/[^A-Za-zऀ-ॿ.'-]/g, '').slice(0, 24);
+            if (first) {
+                document.getElementById('tyTitle').innerHTML =
+                    first.replace(/&/g, '&amp;') + ', आपकी Seat <span>Reserve हो गई है</span>';
+            }
+
+            /* ---------- pdf ----------
+               html2pdf (html2canvas + jsPDF) से असली .pdf file directly download होती है —
+               कोई print dialog नहीं. Library load न हो पाए तो print window पर fall back करते हैं. */
+            function esc(s) {
+                return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            }
+
+            /* A4 in pt, 14mm margin. stage की width इतनी रखते हैं कि px→pt ratio ठीक 0.75 बैठे. */
+            var PT_PER_PX = 0.75, PAGE_W = 595.28, PAGE_H = 841.89, MARGIN = 39.7;
+            var STAGE_W = Math.round((PAGE_W - 2 * MARGIN) / PT_PER_PX);
+
+            var PDF_CSS = ''
+                + '#pdfHolder{position:absolute;left:-10000px;top:0;width:1px;height:1px;overflow:hidden}'
+                + '.pdfdoc{margin:0;padding:0;background:#fff;'
+                + 'font-family:"Plus Jakarta Sans","Noto Sans Devanagari",system-ui,Segoe UI,Roboto,sans-serif;color:#0b141a}'
+                + '.pdfdoc *{box-sizing:border-box}'
+                + '.pdfdoc .hd{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 22px;border-radius:10px 10px 0 0;background:linear-gradient(160deg,#10241d,#08120f);color:#fff}'
+                + '.pdfdoc .hd .k{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#25D366;font-weight:700;margin-bottom:5px}'
+                + '.pdfdoc .hd b{font-size:15px;line-height:1.3}'
+                + '.pdfdoc .hd .id{text-align:right;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8fb5a4;font-weight:600}'
+                + '.pdfdoc .hd .id span{display:block;margin-top:4px;font-size:14px;color:#fff;font-weight:800;letter-spacing:.05em}'
+                + '.pdfdoc .bd{border:1px solid #dde7e2;border-top:0;border-radius:0 0 10px 10px;overflow:hidden}'
+                + '.pdfdoc .cols{display:flex;gap:0}'
+                + '.pdfdoc .col{flex:1;padding:18px 22px}'
+                + '.pdfdoc .col+.col{border-left:1px dashed #cfded7}'
+                + '.pdfdoc .col h3{margin:0 0 10px;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#0f9d58}'
+                + '.pdfdoc .row2{display:flex;gap:10px;margin-bottom:8px;font-size:12px;line-height:1.5}'
+                + '.pdfdoc .row2 .t{width:82px;color:#68757c;flex:none}'
+                + '.pdfdoc .row2 .v{font-weight:700;color:#0b141a;word-break:break-word}'
+                + '.pdfdoc .row2 .v small{display:block;font-weight:500;color:#68757c;font-size:10.5px;margin-top:2px}'
+                + '.pdfdoc .zl{margin:10px 22px 0;padding:10px 12px;border:1px solid #cfe8da;background:#f2fbf6;border-radius:8px;font-size:10.5px;color:#0f6b41;word-break:break-all;line-height:1.5}'
+                + '.pdfdoc .pr{margin-top:14px;padding:16px 22px;background:#f5f9f7;border-top:1px dashed #cfded7}'
+                + '.pdfdoc .pr .r{display:flex;justify-content:space-between;font-size:12px;color:#556269;margin-bottom:7px}'
+                + '.pdfdoc .pr .r .free{color:#0f9d58;font-weight:800}'
+                + '.pdfdoc .pr .tot{display:flex;justify-content:space-between;font-size:15px;font-weight:800;color:#0b141a;border-top:1px solid #dde7e2;padding-top:11px;margin-top:4px}'
+                + '.pdfdoc .pr .tot span:last-child{color:#0f9d58}'
+                + '.pdfdoc .bn{display:block;width:100%;margin-top:14px;border-radius:8px}'
+                + '.pdfdoc .jw{margin:16px 22px 20px;text-align:center}'
+                + '.pdfdoc .jbtn{display:inline-block;padding:13px 30px;border-radius:8px;background:#0f9d58;color:#fff;font-size:13.5px;font-weight:800;text-decoration:none;letter-spacing:.01em}'
+                + '.pdfdoc .jw small{display:block;margin-top:8px;font-size:10px;color:#68757c}'
+                + '.pdfdoc .cta{margin-top:20px;padding:22px;border-radius:10px;text-align:center;background:linear-gradient(160deg,#10241d,#08120f);color:#fff}'
+                + '.pdfdoc .cta b{display:block;font-size:16px;line-height:1.35;margin-bottom:6px}'
+                + '.pdfdoc .cta p{margin:0 0 14px;font-size:11.5px;color:#b9cdc5;line-height:1.6}'
+                + '.pdfdoc .cta .jbtn{background:#25D366;color:#06251a}'
+                + '.pdfdoc .cta a.alt{display:block;margin-top:11px;font-size:10.5px;color:#9ce8bd;text-decoration:none;word-break:break-all}'
+                + '.pdfdoc .ft{margin-top:14px;font-size:10px;color:#7d8a90;text-align:center;line-height:1.6}'
+                + '.pdfdoc .gt{margin:0 0 6px;font-size:22px;line-height:1.2;letter-spacing:-.02em}'
+                + '.pdfdoc .gs{margin:0 0 18px;font-size:12px;color:#556269;line-height:1.6}'
+                + '.pdfdoc .qa{padding:13px 0;border-top:1px solid #e3eae6}'
+                + '.pdfdoc .qa b{display:block;font-size:13px;line-height:1.4;margin-bottom:5px}'
+                + '.pdfdoc .qa b i{font-style:normal;color:#0f9d58;margin-right:7px}'
+                + '.pdfdoc .qa p{margin:0 0 0 22px;font-size:11.5px;line-height:1.65;color:#42505a}';
+
+            /* preview और stage दोनों को ये styles चाहिए — इसलिए एक बार, शुरू में ही inject */
+            (function () {
+                var st = document.createElement('style');
+                st.textContent = PDF_CSS;
+                document.head.appendChild(st);
+            })();
+
+            var stage = null;
+            function getStage() {
+                if (stage) return stage;
+                var holder = document.createElement('div');
+                holder.id = 'pdfHolder';
+                holder.setAttribute('aria-hidden', 'true');
+                stage = document.createElement('div');
+                stage.id = 'pdfStage';
+                stage.className = 'pdfdoc';
+                stage.style.width = STAGE_W + 'px';
+                holder.appendChild(stage);
+                document.body.appendChild(holder);
+                return stage;
+            }
+
+            /* image और font ready होने का इंतज़ार — वरना canvas में आधा content आता है */
+            function ready(el) {
+                var waits = [];
+                var imgs = el.querySelectorAll('img');
+                for (var i = 0; i < imgs.length; i++) {
+                    (function (im) {
+                        if (im.complete) return;
+                        waits.push(new Promise(function (res) { im.onload = im.onerror = res; }));
+                    })(imgs[i]);
+                }
+                if (document.fonts && document.fonts.ready) { waits.push(document.fonts.ready); }
+                return Promise.all(waits);
+            }
+
+            function busy(btn, on) {
+                if (!btn) return;
+                if (on) {
+                    btn.dataset.label = btn.innerHTML;
+                    btn.disabled = true;
+                    btn.style.opacity = '.7';
+                    btn.innerHTML = '<i class="ph-bold ph-circle-notch"></i> PDF तैयार हो रही है…';
+                } else {
+                    btn.disabled = false;
+                    btn.style.opacity = '';
+                    if (btn.dataset.label) btn.innerHTML = btn.dataset.label;
+                }
+            }
+
+            /* fallback — library न मिले तो print window (वहाँ Save as PDF) */
+            function printFallback(title, inner) {
+                var w = window.open('', '_blank');
+                if (!w) { alert('PDF के लिए popup allow करें.'); return; }
+                /* tags को तोड़कर लिखना ज़रूरी है — वरना HTML parser यहीं inline script बंद कर देता है */
+                var openTag = '<' + 'script>', closeTag = '<' + '/script>';
+                var css = PDF_CSS.split('.pdfdoc').join('body') + '@page{size:A4;margin:14mm}';
+                w.document.open();
+                w.document.write('<!doctype html><html lang="hi"><head><meta charset="utf-8">'
+                    + '<base href="' + esc(location.href) + '"><title>' + esc(title) + '</title>'
+                    + '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap">'
+                    + '<style>' + css + '</style></head><body>' + inner
+                    + openTag + 'window.onload=function(){setTimeout(function(){window.focus();window.print();},600);};' + closeTag
+                    + '</body></html>');
+                w.document.close();
+            }
+
+            /* library सिर्फ पहली बार button दबाने पर load होती है — page fast रहता है */
+            var LIB_URL = 'https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.3/dist/html2pdf.bundle.min.js';
+            var libPromise = null;
+            function loadLib() {
+                if (typeof html2pdf === 'function') return Promise.resolve();
+                if (libPromise) return libPromise;
+                libPromise = new Promise(function (res, rej) {
+                    var t = document.createElement('script');
+                    t.src = LIB_URL;
+                    t.onload = res;
+                    t.onerror = function () { libPromise = null; rej(new Error('html2pdf load failed')); };
+                    document.head.appendChild(t);
+                });
+                return libPromise;
+            }
+
+            function makePdf(filename, title, inner, btn) {
+                var el = getStage();
+                el.innerHTML = inner;
+                busy(btn, true);
+
+                /* html2pdf capture से पहले page को top पर लाना ज़रूरी है: वो source को अपनी
+                   fixed, आधी-काली overlay में रखकर render करता है — page scrolled हो तो
+                   html2canvas उसी overlay को capture कर लेता है और PDF काली आती है. */
+                var sx = window.pageXOffset, sy = window.pageYOffset;
+                var lock = document.body.style.overflow;
+                document.body.style.overflow = '';
+                window.scrollTo(0, 0);
+
+                function restore() {
+                    document.body.style.overflow = lock;
+                    window.scrollTo(sx, sy);
+                    busy(btn, false);
+                    el.innerHTML = '';
+                }
+
+                loadLib().then(function () { return ready(el); }).then(function () {
+                    /* enableLinks html2pdf का अपना feature है — <a> अपने आप clickable PDF link बनते हैं */
+                    return html2pdf().set({
+                        margin: MARGIN,
+                        filename: filename,
+                        enableLinks: true,
+                        image: { type: 'jpeg', quality: 0.98 },
+                        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', scrollX: 0, scrollY: 0, logging: false },
+                        jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
+                        pagebreak: { mode: 'legacy' }
+                    }).from(el).save();
+                }).then(restore)['catch'](function (err) {
+                    console.error('PDF banane me dikkat', err);
+                    restore();
+                    printFallback(title, inner);
+                });
+            }
+
+            /* ---------- preview ----------
+               button दबाते ही modal में वही document दिखता है जो PDF में जाएगा,
+               और वहीं से Download PDF. */
+            var pv = document.getElementById('pv');
+            var pvDoc = document.getElementById('pvDoc');
+            var pvPage = document.getElementById('pvPage');
+            var pvFit = document.getElementById('pvFit');
+            var pvTitle = document.getElementById('pvTitle');
+            var pvSub = document.getElementById('pvSub');
+            var pvSave = document.getElementById('pvSave');
+            var current = null;
+
+            function fitPreview() {
+                if (!pv || pv.hidden || !pvPage) return;
+                var avail = pvFit.clientWidth;
+                var full = STAGE_W + 40;                    /* doc + .pv-page का padding */
+                var sc = Math.min(1, avail / full);
+                pvPage.style.transform = 'scale(' + sc + ')';
+                pvFit.style.height = (pvPage.offsetHeight * sc) + 'px';
+            }
+
+            function openPreview(doc) {
+                if (!pv) { makePdf(doc.filename, doc.title, doc.inner, null); return; }
+                current = doc;
+                pvDoc.innerHTML = doc.inner;
+                pvTitle.textContent = doc.title;
+                pvSub.textContent = doc.sub || '';
+                pv.hidden = false;
+                document.body.style.overflow = 'hidden';
+                fitPreview();
+                /* image/font आने के बाद height बदल सकती है */
+                ready(pvDoc).then(fitPreview);
+                setTimeout(fitPreview, 350);
+            }
+
+            function closePreview() {
+                if (!pv || pv.hidden) return;
+                pv.hidden = true;
+                pvDoc.innerHTML = '';
+                document.body.style.overflow = '';
+                current = null;
+            }
+
+            if (pv) {
+                pv.addEventListener('click', function (e) {
+                    if (e.target === pv || e.target.closest('[data-close]')) closePreview();
+                });
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') closePreview();
+                });
+                window.addEventListener('resize', fitPreview);
+                pvSave.addEventListener('click', function () {
+                    if (!current) return;
+                    makePdf(current.filename, current.title, current.inner, pvSave);
+                });
+            }
+
+            function r2(t, v, s) {
+                return '<div class="row2"><span class="t">' + esc(t) + '</span><span class="v">' + esc(v)
+                    + (s ? '<small>' + esc(s) + '</small>' : '') + '</span></div>';
+            }
+
+            var ticketBtn = document.getElementById('dlTicket');
+            if (ticketBtn) ticketBtn.addEventListener('click', function () {
+                var inner = ''
+                    + '<div class="hd"><div><div class="k">Confirmed E-Ticket</div><b>' + esc(WEBINAR.title) + '</b></div>'
+                    + '<div class="id">Ticket ID<span>' + esc(TID) + '</span></div></div>'
+                    + '<div class="bd"><div class="cols">'
+                    + '<div class="col"><h3>Attendee Details</h3>'
+                    + r2('Name', attendee.name) + r2('WhatsApp', attendee.phone)
+                    + r2('Email', attendee.email) + r2('Industry', attendee.industry)
+                    + r2('Status', 'CONFIRMED') + '</div>'
+                    + '<div class="col"><h3>Webinar Details</h3>'
+                    + r2('Date', WEBINAR.date) + r2('Time', WEBINAR.time)
+                    + r2('Duration', WEBINAR.duration)
+                    + r2('Platform', WEBINAR.platform, 'Webinar ID: ' + WEBINAR.zoomId)
+                    + '</div></div>'
+                    + '<div class="zl"><b>Zoom Link:</b><br>' + esc(WEBINAR.zoomLink) + '</div>'
+                    + '<div class="pr">'
+                    + '<div class="r"><span>Masterclass Fee</span><span><s>Rs. 499</s></span></div>'
+                    + '<div class="r"><span>Special Discount (100%)</span><span class="free">- Rs. 499 &nbsp;·&nbsp; FREE</span></div>'
+                    + '<div class="tot"><span>Total Payable</span><span>Rs. 0</span></div></div>'
+                    + '</div>'
+                    + '<img class="bn" src="Images/banner.webp" alt="" onerror="this.style.display=&#39;none&#39;">'
+                    + '<div class="jw"><a class="jbtn" href="' + esc(WEBINAR.zoomLink) + '">▶  Join Zoom Webinar</a>'
+                    + '<small>Webinar ID: ' + esc(WEBINAR.zoomId) + ' &nbsp;·&nbsp; ' + esc(WEBINAR.date) + ', ' + esc(WEBINAR.time) + '</small></div>'
+                    + '<div class="ft">यह ticket आपके registration का proof है. Live session से 10 minute पहले Zoom link से join करें.<br>© Dipanshu Vijay — Business Automation Expert</div>';
+                var who = attendee.name === '—' ? 'Guest' : attendee.name;
+                openPreview({
+                    filename: 'Masterclass-Ticket-' + TID + '.pdf',
+                    title: 'Masterclass Ticket',
+                    sub: who + ' · ' + WEBINAR.date,
+                    inner: inner
+                });
+            });
+
+            var GUIDE = [
+                ['WhatsApp Business API क्या है और कैसे काम करता है?',
+                    'यह WhatsApp का official business channel है जो आपके software/CRM को WhatsApp से जोड़ता है. App की जगह API के ज़रिए messages जाते हैं, इसलिए एक ही number पर bulk sending, automation और पूरी team safely काम कर सकती है.'],
+                ['Number Ban से बचने के Official तरीके क्या हैं?',
+                    'सिर्फ opt-in लिए हुए numbers पर message करें, approved templates use करें, हर message में opt-out option दें, quality rating रोज़ check करें और volume अचानक बढ़ाने के बजाय धीरे-धीरे scale करें. Spam reports ही ban की सबसे बड़ी वजह हैं.'],
+                ['Secure Bulk Messaging & Broadcast कैसे करें?',
+                    'Contacts को segment करें, हर batch में personalised template भेजें, sending speed limit रखें और block/bounce वाले numbers तुरंत हटा दें. एक ही message सबको एक साथ भेजना सबसे बड़ी गलती है.'],
+                ['Smart Automation Flows कैसे बनाएँ?',
+                    'हर flow का एक goal तय करें — enquiry, follow-up या payment. Trigger → condition → action के pattern में flow बनाएँ, human handover का option रखें और flow save करके बार-बार reuse करें.'],
+                ['Leads को Manage, Tag, Score और Nurture कैसे करें?',
+                    'हर lead को source और interest के हिसाब से tag करें, budget/urgency/response पर score दें, hot leads पर तुरंत call करें और बाकी को scheduled follow-up sequence में डाल दें.'],
+                ['Team Inbox, Chat Assignment & Collaboration कैसे काम करता है?',
+                    'एक ही number पर पूरी team login करती है. Chats agent को assign होते हैं, internal notes से context share होता है और हर conversation का owner तय रहता है — इससे कोई lead miss नहीं होती.'],
+                ['Template Approval जल्दी कैसे कराएँ?',
+                    'Template साफ़ और transactional रखें, promotional-sounding शब्द और fake urgency हटाएँ, variables का सही example दें और सही category (utility / marketing) चुनें. Reject होने पर reason पढ़कर wording ठीक करें.'],
+                ['Real-life Use Cases और Advanced Strategies क्या हैं?',
+                    'Abandoned cart recovery, appointment reminders, order updates, payment follow-up, feedback collection और re-engagement campaigns — ये सबसे ज़्यादा ROI देने वाले use cases हैं.'],
+                ['Facebook / Instagram Ads, IndiaMART, TradeIndia, Shopify और WooCommerce की leads का automation कैसे करें?',
+                    'हर platform को webhook या ready integration से WhatsApp API से जोड़ें. Lead आते ही instant welcome message जाता है, फिर qualification questions और scheduled follow-up sequence अपने आप चलता है — manual काम शून्य.']
+            ];
+
+            var guideBtn = document.getElementById('dlGuide');
+            if (guideBtn) guideBtn.addEventListener('click', function () {
+                var items = GUIDE.map(function (g, i) {
+                    return '<div class="qa"><b><i>' + (i + 1) + '.</i>' + esc(g[0]) + '</b><p>' + esc(g[1]) + '</p></div>';
+                }).join('');
+                var who = attendee.name === '—' ? 'Guest' : attendee.name;
+                var inner = ''
+                    + '<div class="hd"><div><div class="k">Free Guide</div><b>अपना WhatsApp Number Ban से कैसे बचाएँ</b></div>'
+                    + '<div class="id">Prepared for<span>' + esc(who) + '</span></div></div>'
+                    + '<div class="bd" style="padding:20px 22px">'
+                    + '<h2 class="gt">WhatsApp Automation — Quick Protection Guide</h2>'
+                    + '<p class="gs">Masterclass से पहले ये 9 points पढ़ लें. यही topics <b>' + esc(WEBINAR.date) + ', ' + esc(WEBINAR.time) + '</b> की live session में detail के साथ cover होंगे.</p>'
+                    + items
+                    + '<div class="cta"><b>ये सब live करके दिखाया जाएगा</b>'
+                    + '<p>' + esc(WEBINAR.date) + ' · ' + esc(WEBINAR.time) + ' · Zoom पर 60 minute की FREE Masterclass — <s>Rs. 499</s> अब Rs. 0</p>'
+                    + '<a class="jbtn" href="' + esc(WEBINAR.zoomLink) + '">▶  Join Zoom Webinar</a>'
+                    + '<a class="alt" href="' + esc(SITE_URL) + '">Masterclass की पूरी details देखें →</a></div>'
+                    + '</div>'
+                    + '<div class="ft">Live Masterclass · ' + esc(WEBINAR.date) + ' · ' + esc(WEBINAR.time) + ' · Zoom ID ' + esc(WEBINAR.zoomId) + '<br>© Dipanshu Vijay — Business Automation Expert</div>';
+                openPreview({
+                    filename: 'WhatsApp-Number-Protection-Guide.pdf',
+                    title: 'WhatsApp Number Protection Guide',
+                    sub: '9 points · ' + who,
+                    inner: inner
+                });
+            });
         })();
     </script>
 </body>

@@ -178,9 +178,15 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #2ee06f, #0f9d58);
-            color: #fff;
+            background: linear-gradient(135deg, #34e57a, #0f9d58);
+            color: #042a1c;
+            text-shadow: none;
             box-shadow: var(--shadow-green)
+        }
+
+        .btn-primary i,
+        .btn-primary s {
+            color: inherit
         }
 
         .btn-primary:hover {
@@ -207,6 +213,11 @@
         }
 
         /* ---------- header ---------- */
+        #register,
+        #regcard {
+            scroll-margin-top: 78px
+        }
+
         .hdr {
             position: sticky;
             top: 0;
@@ -261,7 +272,65 @@
         .hdr .btn {
             padding: 11px 18px;
             font-size: 14px;
-            border-radius: 5px
+            border-radius: 5px;
+            white-space: nowrap;
+            flex: none
+        }
+
+        @media(max-width:640px) {
+            #register,
+            #regcard {
+                scroll-margin-top: 66px
+            }
+
+            .hdr-in {
+                gap: 10px;
+                padding: 9px 0
+            }
+
+            .brand {
+                gap: 8px;
+                min-width: 0
+            }
+
+            .brand-mark {
+                width: 32px;
+                height: 32px;
+                font-size: 17px
+            }
+
+            .brand-mark svg {
+                width: 19px;
+                height: 19px
+            }
+
+            .brand-name {
+                font-size: 13px;
+                line-height: 1.25;
+                letter-spacing: 0
+            }
+
+            .brand-name span {
+                display: block
+            }
+
+            .hdr .btn {
+                padding: 10px 13px;
+                font-size: 12.5px;
+                gap: 6px;
+                letter-spacing: .01em
+            }
+        }
+
+        @media(max-width:380px) {
+            .brand-name {
+                font-size: 12px
+            }
+
+            .hdr .btn {
+                padding: 9px 11px;
+                font-size: 11.5px
+            }
         }
 
         /* ---------- hero ---------- */
@@ -3541,7 +3610,7 @@
         }
 
         .wcta .free {
-            color: #ffe08a
+            color: #fff;
         }
 
         .wcta .arrow {
@@ -3826,7 +3895,7 @@
                         <div class="wmeta">
                             <div>
                                 <i class="ph-bold ph-calendar-blank"></i>
-                                <span><small>Date</small><b>25th August 2026</b><em>Mark Your Calendar!</em></span>
+                                <span><small>Date</small><b class="js-wdate">25th August 2026</b><em>Mark Your Calendar!</em></span>
                             </div>
                             <div>
                                 <i class="ph-bold ph-clock"></i>
@@ -3839,7 +3908,7 @@
                             </div>
                             <div>
                                 <i class="ph-bold ph-timer"></i>
-                                <span><small>Duration</small><b>2 Hours</b><em>Power-Packed Training</em></span>
+                                <span><small>Duration</small><b>60 Minutes</b><em>Power-Packed Training</em></span>
                             </div>
                         </div>
                     </div>
@@ -4256,7 +4325,7 @@
                 </div>
 
                 <!-- registration -->
-                <div class="regcard">
+                <div class="regcard" id="regcard">
                     <h3>Register करें और अपनी Seat <span class="gr">पक्की करें</span></h3>
                     <p class="note">यह Masterclass पूरी तरह FREE है<br /><em>लेकिन Seats Limited हैं!</em></p>
 
@@ -4582,10 +4651,10 @@
             <div class="sticky-info">
                 <b>Automate &amp; Scale with WhatsApp — FREE Masterclass</b>
                 <span>
-                    <em style="font-style:normal"><i class="ph-bold ph-calendar-blank"></i>25th August 2026</em>
+                    <em style="font-style:normal"><i class="ph-bold ph-calendar-blank"></i><span class="js-wdate">25th August 2026</span></em>
                     <em style="font-style:normal"><i class="ph-bold ph-clock"></i>5 PM</em>
                     <em style="font-style:normal"><i class="ph-bold ph-desktop"></i>Online (Zoom)</em>
-                    <em style="font-style:normal"><i class="ph-bold ph-timer"></i>2 Hours</em>
+                    <em style="font-style:normal"><i class="ph-bold ph-timer"></i>60 Minutes</em>
                 </span>
             </div>
             <a class="btn btn-primary" href="#register" data-cta="sticky">CLAIM YOUR SEAT <s>&#8377;499</s> FREE</a>
@@ -4598,6 +4667,24 @@
             var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             document.getElementById('yr').textContent = new Date().getFullYear();
             document.body.classList.add('has-sticky');
+
+
+            /* ---- CTA scroll target ----
+               stacked layouts put the mentor intro above the form, so on narrow
+               screens every #register CTA lands on the form card itself */
+            var regCard = document.getElementById('regcard');
+            var regSection = document.getElementById('register');
+            if (regCard && regSection) {
+                document.querySelectorAll('a[href="#register"]').forEach(function (a) {
+                    a.addEventListener('click', function (e) {
+                        var stacked = !window.matchMedia('(min-width:980px)').matches;
+                        var target = stacked ? regCard : regSection;
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+                        if (history.replaceState) history.replaceState(null, '', '#register');
+                    });
+                });
+            }
 
             /* ---- scroll reveal ---- */
             var revs = document.querySelectorAll('.rv');
@@ -4935,6 +5022,34 @@
                     showFormError('Submit नहीं हो पाया. कृपया दोबारा try करें या WhatsApp पर संपर्क करें।');
                 });
             });
+        })();
+    </script>
+    <script>
+        /* ---------- next live session ----------
+           हर हफ़्ते Tuesday और Friday, 5 PM IST. session वाले दिन 5 PM निकलते ही
+           page अपने आप अगली date दिखाने लगता है — कोई manual edit नहीं. */
+        (function () {
+            "use strict";
+            var SESSION_DAYS = [2, 5];   /* 2 = Tuesday, 5 = Friday */
+            var SESSION_HOUR = 17;       /* 5 PM IST */
+            var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+
+            function isSessionDay(d) { return SESSION_DAYS.indexOf(d) !== -1; }
+
+            /* IST wall-clock — visitor का timezone कुछ भी हो, UTC+5:30 पर shift करके UTC getters पढ़ते हैं */
+            var ist = new Date(Date.now() + 5.5 * 3600 * 1000);
+            var next = new Date(Date.UTC(ist.getUTCFullYear(), ist.getUTCMonth(), ist.getUTCDate()));
+            if (!(isSessionDay(ist.getUTCDay()) && ist.getUTCHours() < SESSION_HOUR)) {
+                do { next.setUTCDate(next.getUTCDate() + 1); } while (!isSessionDay(next.getUTCDay()));
+            }
+
+            var n = next.getUTCDate(), suf = ['th', 'st', 'nd', 'rd'], v = n % 100;
+            var text = n + (suf[(v - 20) % 10] || suf[v] || suf[0]) + ' ' +
+                MONTHS[next.getUTCMonth()] + ' ' + next.getUTCFullYear();
+
+            var els = document.querySelectorAll('.js-wdate');
+            for (var i = 0; i < els.length; i++) { els[i].textContent = text; }
         })();
     </script>
 </body>
