@@ -2160,7 +2160,8 @@
         }
 
         .field input,
-        .field select {
+        .field select,
+        .field .dd-btn {
             width: 100%;
             border: 1.5px solid #e4ece8;
             background: #fff;
@@ -2175,7 +2176,8 @@
         @media(max-width:900px) {
 
             .field input,
-            .field select {
+            .field select,
+            .field .dd-btn {
                 font-size: 16px
             }
         }
@@ -2209,13 +2211,16 @@
         }
 
         .field input:focus,
-        .field select:focus {
+        .field select:focus,
+        .field .dd-btn:focus-visible,
+        .field .dd.is-open .dd-btn {
             border-color: var(--green);
             box-shadow: 0 0 0 3px rgba(37, 211, 102, .18)
         }
 
         .field.invalid input,
-        .field.invalid select {
+        .field.invalid select,
+        .field.invalid .dd-btn {
             border-color: var(--red);
             background: #fff6f6
         }
@@ -2233,7 +2238,8 @@
         }
 
         /* verified state — confirms the value passed validation */
-        .field.ok input {
+        .field.ok input,
+        .field.ok .dd-btn {
             border-color: rgba(15, 157, 88, .55);
             background: #f7fcf9
         }
@@ -2397,6 +2403,112 @@
         .field-q .selwrap:focus-within .caret {
             transform: translateY(-50%) rotate(180deg);
             color: var(--green-deep)
+        }
+
+        /* ---- custom dropdown ----
+           the native <select> stays in the form as the value holder; this is the
+           visible control, so the list looks the same on every phone instead of
+           inheriting the browser's own picker. */
+        .dd-native {
+            display: none
+        }
+
+        .dd-btn {
+            display: block;
+            text-align: left;
+            font-family: inherit;
+            font-weight: 500;
+            color: var(--ink);
+            cursor: pointer;
+            appearance: none;
+            padding-right: 42px;
+            line-height: 1.35
+        }
+
+        .dd-btn.is-empty {
+            color: #8e9c97
+        }
+
+        /* caret points down until the list is actually open */
+        .dd:not(.is-open) .caret {
+            transform: translateY(-50%)
+        }
+
+        .dd.is-open .caret {
+            transform: translateY(-50%) rotate(180deg);
+            color: var(--green-deep)
+        }
+
+        .dd-pop {
+            position: absolute;
+            z-index: 60;
+            left: 0;
+            right: 0;
+            top: calc(100% + 6px);
+            display: none;
+            padding: 6px;
+            background: #fff;
+            border: 1.5px solid #dceae3;
+            border-radius: 10px;
+            box-shadow: 0 22px 44px -20px rgba(8, 17, 15, .45);
+            max-height: min(46vh, 306px);
+            overflow-y: auto;
+            overscroll-behavior: contain
+        }
+
+        .dd.is-open .dd-pop {
+            display: block
+        }
+
+        .dd.is-up .dd-pop {
+            top: auto;
+            bottom: calc(100% + 6px)
+        }
+
+        .dd-opt {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 12px;
+            border-radius: 7px;
+            font-size: 14.5px;
+            line-height: 1.3;
+            color: var(--ink);
+            cursor: pointer
+        }
+
+        .dd-opt+.dd-opt {
+            margin-top: 2px
+        }
+
+        .dd-opt.is-active {
+            background: #f1f9f5
+        }
+
+        .dd-opt.is-sel {
+            color: var(--green-deep);
+            font-weight: 700;
+            background: #eaf7f0
+        }
+
+        .dd-opt i {
+            margin-left: auto;
+            font-size: 16px;
+            color: var(--green-deep);
+            opacity: 0
+        }
+
+        .dd-opt.is-sel i {
+            opacity: 1
+        }
+
+        .dd-pop::-webkit-scrollbar {
+            width: 8px
+        }
+
+        .dd-pop::-webkit-scrollbar-thumb {
+            background: #d7e6dd;
+            border-radius: 8px
         }
 
         .checkline {
@@ -5121,7 +5233,7 @@
                     showFormError('Some fields are incomplete — please fix the highlighted fields below.');
                     var bad = firstInvalid();
                     if (bad) {
-                        var input = bad.querySelector('input,select');
+                        var input = bad.querySelector('.dd-btn, input, select');
                         if (input) input.focus({ preventScroll: true });
                         bad.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
                     }
@@ -5176,6 +5288,183 @@
                     if (good) f.classList.remove('invalid');
                 });
             });
+
+            /* ---- custom dropdowns ----
+               the native <select> stays in the form and keeps holding the value,
+               so validation, FormData and the verified tick all work unchanged.
+               only the picker is ours, which is what makes the list look the same
+               on every phone instead of following the browser theme. */
+            (function () {
+                var open = null;   /* { box, btn, pop, items, sel, active, spill } */
+
+                /* the form sits inside panels that clip their children (.mr), so the
+                   open list would be cut off — un-clip those ancestors meanwhile */
+                function unclip(el) {
+                    var spill = [];
+                    for (var n = el.parentElement; n && n !== document.body; n = n.parentElement) {
+                        if (getComputedStyle(n).overflow !== 'visible') {
+                            spill.push([n, n.style.overflow]);
+                            n.style.overflow = 'visible';
+                        }
+                    }
+                    return spill;
+                }
+
+                function close(refocus) {
+                    if (!open) return;
+                    var cur = open;
+                    open = null;
+                    cur.box.classList.remove('is-open', 'is-up');
+                    cur.btn.setAttribute('aria-expanded', 'false');
+                    (cur.spill || []).forEach(function (pair) { pair[0].style.overflow = pair[1]; });
+                    if (refocus) cur.btn.focus();
+                }
+
+                document.addEventListener('mousedown', function (e) {
+                    if (open && !open.box.contains(e.target)) close(false);
+                });
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape' && open) { e.preventDefault(); close(true); }
+                });
+
+                form.querySelectorAll('select').forEach(function (sel) {
+                    var box = sel.closest('.ipwrap, .selwrap');
+                    if (!box) return;
+
+                    box.classList.add('dd');
+                    sel.classList.add('dd-native');
+                    sel.setAttribute('tabindex', '-1');
+                    sel.setAttribute('aria-hidden', 'true');
+
+                    var all = Array.prototype.slice.call(sel.options);
+                    var hint = (all[0] && all[0].value === '') ? all[0].text : 'Select an option';
+                    var real = all.filter(function (o) { return o.value !== ''; });
+
+                    var btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'dd-btn';
+                    btn.setAttribute('aria-haspopup', 'listbox');
+                    btn.setAttribute('aria-expanded', 'false');
+
+                    var pop = document.createElement('div');
+                    pop.className = 'dd-pop';
+                    pop.setAttribute('role', 'listbox');
+
+                    /* step 2 has a visible question label — point the button at it */
+                    var lab = sel.id ? document.querySelector('label[for="' + sel.id + '"]') : null;
+                    if (lab) {
+                        if (!lab.id) lab.id = sel.id + '_lab';
+                        btn.setAttribute('aria-labelledby', lab.id);
+                        pop.setAttribute('aria-label', lab.textContent.trim());
+                    } else {
+                        btn.setAttribute('aria-label', hint);
+                        pop.setAttribute('aria-label', hint);
+                    }
+
+                    var items = real.map(function (o) {
+                        var el = document.createElement('div');
+                        el.className = 'dd-opt';
+                        el.setAttribute('role', 'option');
+                        el.setAttribute('data-value', o.value);
+                        var t = document.createElement('span');
+                        t.textContent = o.text;
+                        el.appendChild(t);
+                        el.insertAdjacentHTML('beforeend', '<i class="ph-bold ph-check" aria-hidden="true"></i>');
+                        pop.appendChild(el);
+                        return el;
+                    });
+
+                    box.appendChild(btn);
+                    box.appendChild(pop);
+
+                    function paint() {
+                        var v = sel.value;
+                        btn.textContent = v || hint;
+                        btn.classList.toggle('is-empty', !v);
+                        items.forEach(function (el) {
+                            var on = !!v && el.getAttribute('data-value') === v;
+                            el.classList.toggle('is-sel', on);
+                            el.setAttribute('aria-selected', on ? 'true' : 'false');
+                        });
+                    }
+
+                    function setActive(i) {
+                        if (!items.length) return;
+                        i = Math.max(0, Math.min(items.length - 1, i));
+                        items.forEach(function (el) { el.classList.remove('is-active'); });
+                        var el = items[i];
+                        el.classList.add('is-active');
+                        if (open) open.active = i;
+                        var top = el.offsetTop, bottom = top + el.offsetHeight;
+                        if (top < pop.scrollTop) pop.scrollTop = top - 6;
+                        else if (bottom > pop.scrollTop + pop.clientHeight) pop.scrollTop = bottom - pop.clientHeight + 6;
+                    }
+
+                    function show() {
+                        if (open && open.box === box) return;
+                        close(false);
+                        open = { box: box, btn: btn, pop: pop, items: items, sel: sel, active: -1, spill: unclip(box) };
+                        box.classList.add('is-open');
+                        btn.setAttribute('aria-expanded', 'true');
+
+                        /* flip upwards when the list would run off the bottom */
+                        var r = btn.getBoundingClientRect();
+                        var need = pop.offsetHeight + 12;
+                        if (r.bottom + need > window.innerHeight && r.top > need) box.classList.add('is-up');
+
+                        var cur = -1;
+                        items.forEach(function (el, i) { if (el.classList.contains('is-sel')) cur = i; });
+                        setActive(cur > -1 ? cur : 0);
+                    }
+
+                    function pick(el) {
+                        sel.value = el.getAttribute('data-value');
+                        sel.dispatchEvent(new Event('change', { bubbles: true }));
+                        paint();
+                        close(true);
+                    }
+
+                    btn.addEventListener('click', function () {
+                        if (open && open.box === box) close(true); else show();
+                    });
+
+                    pop.addEventListener('click', function (e) {
+                        var el = e.target.closest('.dd-opt');
+                        if (el) pick(el);
+                    });
+                    pop.addEventListener('mousemove', function (e) {
+                        var el = e.target.closest('.dd-opt');
+                        if (el) setActive(items.indexOf(el));
+                    });
+
+                    var typed = '', typedAt = 0;
+                    box.addEventListener('keydown', function (e) {
+                        var isOpen = !!open && open.box === box;
+                        var k = e.key;
+
+                        if (!isOpen) {
+                            if (k === 'ArrowDown' || k === 'ArrowUp' || k === 'Enter' || k === ' ') { e.preventDefault(); show(); }
+                            return;
+                        }
+                        if (k === 'ArrowDown') { e.preventDefault(); setActive(open.active + 1); }
+                        else if (k === 'ArrowUp') { e.preventDefault(); setActive(open.active - 1); }
+                        else if (k === 'Home') { e.preventDefault(); setActive(0); }
+                        else if (k === 'End') { e.preventDefault(); setActive(items.length - 1); }
+                        else if (k === 'Enter' || k === ' ') { e.preventDefault(); if (items[open.active]) pick(items[open.active]); }
+                        else if (k === 'Tab') { close(false); }
+                        else if (k.length === 1) {
+                            var now = Date.now();
+                            typed = (now - typedAt < 800 ? typed : '') + k.toLowerCase();
+                            typedAt = now;
+                            for (var i = 0; i < items.length; i++) {
+                                if (items[i].textContent.trim().toLowerCase().indexOf(typed) === 0) { setActive(i); break; }
+                            }
+                        }
+                    });
+
+                    paint();
+                });
+            })();
 
             /* check name / phone / email the moment the visitor leaves the field */
             var liveRules = { full_name: 'fullname', whatsapp_number: 'phone', email: 'email' };
