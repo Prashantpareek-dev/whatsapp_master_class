@@ -2159,6 +2159,53 @@
             pointer-events: none
         }
 
+        /* WhatsApp field का static +91 — value का हिस्सा नहीं, सिर्फ display.
+           Input में हमेशा 10 digit ही जाते हैं, इसलिए validation जस का तस है. */
+        .field-tel .ccode {
+            position: absolute;
+            left: 43px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--ink);
+            pointer-events: none
+        }
+
+        .field-tel .ccode:after {
+            content: "";
+            position: absolute;
+            right: -11px;
+            top: 50%;
+            width: 1px;
+            height: 19px;
+            margin-top: -9.5px;
+            background: #d9e5df
+        }
+
+        /* .field input की specificity बराबर है और वो नीचे declared है,
+           इसलिए यहाँ .field.field-tel चाहिए */
+        .field.field-tel input {
+            padding-left: 85px
+        }
+
+        .field-tel.ok .ccode:after,
+        .field-tel:focus-within .ccode:after {
+            background: rgba(15, 157, 88, .4)
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+            border: 0
+        }
+
         .field input,
         .field select,
         .field .dd-btn {
@@ -2177,7 +2224,8 @@
 
             .field input,
             .field select,
-            .field .dd-btn {
+            .field .dd-btn,
+            .field-tel .ccode {
                 font-size: 16px
             }
         }
@@ -2268,6 +2316,12 @@
         .field-sel.ok .ipwrap:after,
         .field-q.ok .selwrap:after {
             right: 40px
+        }
+
+        /* dropdown खुला है तो verified tick hide — caret और tick एक साथ टकराते हैं */
+        .field.ok .ipwrap.is-open:after,
+        .field-q.ok .selwrap.is-open:after {
+            content: none
         }
 
         .field-sel.ok .caret,
@@ -2491,14 +2545,26 @@
             background: #eaf7f0
         }
 
-        .dd-opt i {
+        /* option का tick एक flex item है, absolutely positioned field-icon नहीं.
+           .field i (2152) और .field-q .selwrap i (2440) हर <i> को absolute + top:50%
+           कर देते हैं, और dd-pop इन्हीं wrappers के अंदर बैठता है — इसलिए यहाँ
+           position/left/top/transform explicitly reset करने ज़रूरी हैं, वरना tick
+           अपनी row छोड़कर popup की बीच वाली row पर जा बैठता है.
+           Selector .dd-pop .dd-opt i रखा है ताकि specificity .field-q .selwrap i
+           से कम न पड़े. */
+        .dd-pop .dd-opt i {
+            position: static;
+            left: auto;
+            top: auto;
+            transform: none;
             margin-left: auto;
+            flex: 0 0 auto;
             font-size: 16px;
             color: var(--green-deep);
             opacity: 0
         }
 
-        .dd-opt.is-sel i {
+        .dd-pop .dd-opt.is-sel i {
             opacity: 1
         }
 
@@ -2961,10 +3027,10 @@
             gap: 26px
         }
 
-        /* infinite right-to-left review marquee */
+        /* infinite right-to-left review marquee — scrolled by script so the
+           visitor can swipe or drag through it at any time */
         .revs {
             position: relative;
-            overflow: hidden;
             -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
             mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent)
         }
@@ -2972,13 +3038,38 @@
         .revs-track {
             display: flex;
             gap: 18px;
-            width: max-content;
-            animation: rev-slide 60s linear infinite
+            width: max-content
         }
 
-        .revs:hover .revs-track,
-        .revs:focus-within .revs-track {
-            animation-play-state: paused
+        /* shared marquee scroller behaviour */
+        .revs,
+        .logos {
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: auto;
+            overscroll-behavior-x: contain;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            cursor: grab
+        }
+
+        .revs::-webkit-scrollbar,
+        .logos::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+            display: none
+        }
+
+        .revs.is-drag,
+        .logos.is-drag {
+            cursor: grabbing;
+            user-select: none
+        }
+
+        .revs.is-drag *,
+        .logos.is-drag * {
+            pointer-events: none
         }
 
         @keyframes rev-slide {
@@ -3170,7 +3261,6 @@
 
         .logos {
             margin-top: 30px;
-            overflow: hidden;
             -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
             mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)
         }
@@ -3179,12 +3269,7 @@
             display: flex;
             gap: 18px;
             align-items: stretch;
-            width: max-content;
-            animation: slide 34s linear infinite
-        }
-
-        .logos:hover .track {
-            animation-play-state: paused
+            width: max-content
         }
 
         .logos img {
@@ -4201,7 +4286,7 @@
                             </div>
                             <div>
                                 <i class="ph-bold ph-timer"></i>
-                                <span><small>Duration</small><b>60 Minutes</b><em>Power-Packed Training</em></span>
+                                <span><small>Duration</small><b>90 Minutes</b><em>Power-Packed Training</em></span>
                             </div>
                         </div>
                     </div>
@@ -4571,7 +4656,7 @@
                     <div class="mentor-photo">
                         <img src="Images/profile.avif" alt="Dipanshu Vijay" loading="lazy" width="1024"
                             height="926" />
-                        <span class="kicker"><i class="ph-bold ph-user-circle"></i> आपके <b>Mentor</b></span>
+                        <span class="kicker"><i class="ph-bold ph-user-circle"></i> Your <b>Mentor</b></span>
                     </div>
                     <div class="mentor-body">
                         <h3>Dipanshu Vijay</h3>
@@ -4645,12 +4730,15 @@
                                 </div>
                                 <span class="err">Please enter your full name (at least 3 letters, no numbers)</span>
                             </div>
-                            <div class="field" data-v="phone">
+                            <div class="field field-tel" data-v="phone">
                                 <div class="ipwrap">
                                     <i class="ph-bold ph-whatsapp-logo"></i>
+                                    <span class="ccode" aria-hidden="true">+91</span>
                                     <input type="tel" name="whatsapp_number" placeholder="WhatsApp Number"
-                                        inputmode="numeric" autocomplete="tel" maxlength="10" />
+                                        inputmode="numeric" autocomplete="tel" maxlength="10"
+                                        aria-describedby="ccodeHint" />
                                 </div>
+                                <span id="ccodeHint" class="sr-only">Indian mobile number, country code +91</span>
                                 <span class="err">Enter a 10-digit number starting with 6-9</span>
                             </div>
                             <div class="field" data-v="email">
@@ -4963,7 +5051,7 @@
                     <em style="font-style:normal"><i class="ph-bold ph-calendar-blank"></i><span class="js-wdate">25th August 2026</span></em>
                     <em style="font-style:normal"><i class="ph-bold ph-clock"></i>5 PM</em>
                     <em style="font-style:normal"><i class="ph-bold ph-desktop"></i>Online (Zoom)</em>
-                    <em style="font-style:normal"><i class="ph-bold ph-timer"></i>60 Minutes</em>
+                    <em style="font-style:normal"><i class="ph-bold ph-timer"></i>90 Minutes</em>
                 </span>
             </div>
             <a class="btn btn-primary" href="#register" data-cta="sticky">CLAIM YOUR SEAT <s>&#8377;499</s> <span class="free">&#8377;0/-</span></a>
@@ -5048,6 +5136,91 @@
                     revTrack.appendChild(clone);
                 });
             }
+
+            /* ---- marquees ----
+               auto-scroll runs on scrollLeft instead of a CSS transform, so the
+               same strip is also a normal scroller: swipe on a phone, drag with
+               the mouse, or use a trackpad. The content is duplicated, so the
+               loop is seamless — we simply jump back a half-width each lap. */
+            function marquee(box, seconds) {
+                var track = box && box.firstElementChild;
+                if (!track) return;
+
+                var paused = false, dragging = false, touched = false;
+                var resumeAt = 0, last = 0, startX = 0, startLeft = 0;
+                /* the position is tracked here rather than read back from
+                   scrollLeft: a slow strip advances well under a pixel per frame,
+                   and those fractions are lost on the round trip */
+                var pos = box.scrollLeft;
+
+                function half() { return track.scrollWidth / 2; }
+                function idle(ms) { resumeAt = performance.now() + (ms || 1400); }
+
+                function wrap() {
+                    var h = half();
+                    if (h < 2) return;
+                    if (box.scrollLeft >= h) { box.scrollLeft -= h; pos = box.scrollLeft; }
+                    else if (touched && box.scrollLeft <= 0) { box.scrollLeft += h; pos = box.scrollLeft; }
+                }
+
+                function frame(now) {
+                    var dt = last ? Math.min(64, now - last) : 16;
+                    last = now;
+                    var h = half();
+                    if (!reduce && !paused && !dragging && now >= resumeAt && h > 2) {
+                        pos += (h / seconds) * dt / 1000;
+                        if (pos >= h) pos -= h;
+                        box.scrollLeft = pos;
+                    } else {
+                        pos = box.scrollLeft;   /* the visitor is steering */
+                    }
+                    wrap();
+                    requestAnimationFrame(frame);
+                }
+                requestAnimationFrame(frame);
+
+                /* pointer hover / keyboard focus hold it still, as before */
+                box.addEventListener('mouseenter', function () { paused = true; });
+                box.addEventListener('mouseleave', function () { paused = false; });
+                box.addEventListener('focusin', function () { paused = true; });
+                box.addEventListener('focusout', function () { paused = false; });
+
+                /* finger: let the browser scroll natively, just stand back while it does */
+                box.addEventListener('touchstart', function () { touched = true; paused = true; }, { passive: true });
+                box.addEventListener('touchend', function () { paused = false; idle(); }, { passive: true });
+                box.addEventListener('touchcancel', function () { paused = false; idle(); }, { passive: true });
+
+                /* mouse: click and drag the strip */
+                box.addEventListener('pointerdown', function (e) {
+                    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+                    dragging = true; touched = true;
+                    startX = e.clientX; startLeft = box.scrollLeft;
+                    try { box.setPointerCapture(e.pointerId); } catch (err) { }
+                });
+                box.addEventListener('pointermove', function (e) {
+                    if (!dragging) return;
+                    var dx = e.clientX - startX;
+                    if (Math.abs(dx) > 3) box.classList.add('is-drag');
+                    box.scrollLeft = startLeft - dx;
+                    wrap();
+                });
+                function endDrag(e) {
+                    if (!dragging) return;
+                    dragging = false;
+                    box.classList.remove('is-drag');
+                    try { box.releasePointerCapture(e.pointerId); } catch (err) { }
+                    idle();
+                }
+                box.addEventListener('pointerup', endDrag);
+                box.addEventListener('pointercancel', endDrag);
+
+                /* trackpad / wheel counts as interaction too */
+                box.addEventListener('wheel', function () { touched = true; idle(900); }, { passive: true });
+                box.addEventListener('scroll', function () { if (!dragging) wrap(); }, { passive: true });
+            }
+
+            marquee(document.querySelector('.revs'), 60);
+            marquee(document.querySelector('.logos'), 34);
 
             /* ---- urgency ticker ---- */
             var tick = document.getElementById('tickerTrack');
@@ -5275,8 +5448,8 @@
             }
             /* name: letters (Latin + Devanagari), spaces and . ' - — no digits */
             filterInput(form.full_name, /[^A-Za-zऀ-ॿ\u200D .'-]/g);
-            /* phone: digits (and a leading +) only — no letters */
-            filterInput(form.whatsapp_number, /[^\d+]/g);
+            /* phone: सिर्फ digits — "+91" अब field में static छपा है */
+            filterInput(form.whatsapp_number, /[^\d]/g);
 
             /* dropdowns: mark verified as soon as a real option is picked */
             form.querySelectorAll('select').forEach(function (sel) {
@@ -5523,15 +5696,17 @@
 
                 try { sessionStorage.setItem('dv_lead', JSON.stringify(data)); } catch (err) { }
 
-                /* the visitor never waits on Sheets: the request is handed to the
-                   browser, then we navigate in the same tick */
+                /* the visitor never waits on Sheets: request keepalive के साथ browser को
+                   सौंप दी जाती है, फिर 1.2s बाद navigate — इतनी देर "Reserving your seat…"
+                   दिखता रहता है, इसलिए jump अचानक नहीं लगता */
+                var LEAVE_DELAY = 1200;
                 function leave() {
                     var first = String(data.full_name || '').trim().split(' ')[0];
                     window.location.replace(THANK_YOU_URL + (first ? '?n=' + encodeURIComponent(first) : ''));
                 }
 
                 if (dispatchLead(data)) {
-                    leave();
+                    setTimeout(leave, LEAVE_DELAY);
                 } else {
                     submitting = false;
                     btn.disabled = false; btn.textContent = btnText;
