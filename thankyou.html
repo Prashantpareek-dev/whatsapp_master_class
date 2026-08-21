@@ -257,6 +257,105 @@
             background: rgba(255, 255, 255, .08)
         }
 
+        .btn-wa {
+            color: #06251a;
+            background: #25D366;
+            box-shadow: 0 16px 34px -18px rgba(37, 211, 102, .7)
+        }
+
+        .btn-wa:hover {
+            transform: translateY(-2px);
+            background: #2ee06f
+        }
+
+        /* hover hint — "click करने पर copy हो जाएगा" */
+        .btn.js-copyopen {
+            position: relative
+        }
+
+        .btn.js-copyopen::after {
+            content: attr(data-tip);
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 12px);
+            transform: translateX(-50%) translateY(5px);
+            z-index: 5;
+            padding: 9px 13px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0;
+            white-space: nowrap;
+            color: #dcece5;
+            background: #061310;
+            border: 1px solid rgba(37, 211, 102, .3);
+            box-shadow: 0 14px 30px -16px #000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .18s ease, transform .18s ease
+        }
+
+        .btn.js-copyopen::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 7px);
+            z-index: 6;
+            width: 9px;
+            height: 9px;
+            transform: translateX(-50%) translateY(5px) rotate(45deg);
+            background: #061310;
+            border-right: 1px solid rgba(37, 211, 102, .3);
+            border-bottom: 1px solid rgba(37, 211, 102, .3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .18s ease, transform .18s ease
+        }
+
+        .btn.js-copyopen:hover::after,
+        .btn.js-copyopen:focus-visible::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0)
+        }
+
+        .btn.js-copyopen:hover::before,
+        .btn.js-copyopen:focus-visible::before {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0) rotate(45deg)
+        }
+
+        @media(max-width:600px) {
+
+            .btn.js-copyopen::after,
+            .btn.js-copyopen::before {
+                display: none
+            }
+        }
+
+        /* copy confirmation */
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 26px;
+            transform: translateX(-50%) translateY(12px);
+            z-index: 80;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #06251a;
+            background: var(--green);
+            box-shadow: 0 18px 40px -18px rgba(0, 0, 0, .8);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s ease, transform .2s ease
+        }
+
+        .toast.on {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0)
+        }
+
         .foot {
             position: relative;
             z-index: 2;
@@ -366,6 +465,15 @@
             .tk-body {
                 grid-template-columns: 1fr
             }
+        }
+
+        .tk-col {
+            display: flex;
+            flex-direction: column
+        }
+
+        .tk-col .tk-zoom {
+            margin-top: auto
         }
 
         .tk-col h3 {
@@ -710,6 +818,12 @@
                                 <dd style="color:var(--green)">CONFIRMED</dd>
                             </div>
                         </dl>
+                        <div class="tk-zoom">
+                            <a class="btn btn-wa js-copyopen" id="waGroupBtn" data-copy="WhatsApp group link"
+                                data-tip="Click करते ही link copy हो जाएगा"
+                                href="https://chat.whatsapp.com/L2Ot1quR6goD1WBdhQlHzW" target="_blank"
+                                rel="noopener"><i class="ph-bold ph-whatsapp-logo"></i> Join WhatsApp Group</a>
+                        </div>
                     </div>
 
                     <div class="tk-col">
@@ -719,7 +833,7 @@
                                 <dd id="tkDate">25th August 2026<small id="tkDay">Tuesday</small></dd>
                             </div>
                             <div><dt>Time</dt>
-                                <dd>5:00 PM IST<small>Sharp &amp; on time</small></dd>
+                                <dd>5:00 PM<small>Sharp &amp; on time</small></dd>
                             </div>
                             <div><dt>Duration</dt>
                                 <dd>60 Minutes<small>Live + Q&amp;A</small></dd>
@@ -729,9 +843,11 @@
                             </div>
                         </dl>
                         <div class="tk-zoom">
-                            <a class="btn btn-primary" id="zoomBtn"
+                            <a class="btn btn-primary js-copyopen" id="zoomBtn" data-copy="Zoom link"
+                                data-tip="Click करते ही Zoom link copy हो जाएगा"
                                 href="https://us06web.zoom.us/webinar/register/WN_niEhINQWTk-VNDwgB23_Tw"
-                                target="_blank" rel="noopener"><i class="ph-bold ph-video-camera"></i> Zoom Link खोलें</a>
+                                target="_blank" rel="noopener"><i class="ph-bold ph-video-camera"></i> Save &amp; Join
+                                Zoom Link</a>
                             <!-- <a class="zlink"
                                 href="https://us06web.zoom.us/webinar/register/WN_niEhINQWTk-VNDwgB23_Tw"
                                 target="_blank"
@@ -752,10 +868,10 @@
                 </div> -->
 
                 <div class="tk-actions">
-                    <button type="button" class="btn btn-primary" id="dlTicket"><i class="ph-bold ph-download-simple"></i>
-                        Download Ticket PDF</button>
+                    <button type="button" class="btn btn-primary" id="dlTicket"><i class="ph-bold ph-share-network"></i>
+                        Share &amp; Download Ticket</button>
                     <button type="button" class="btn btn-ghost" id="dlGuide"><i class="ph-bold ph-shield-check"></i>
-                        Download Protection Guide PDF</button>
+                        Share &amp; Download Protection Guide</button>
                 </div>
                 <!-- <p class="tk-note">दोनों PDF सीधे आपके device में download हो जाएँगी — कोई print dialog नहीं.</p> -->
             </section>
@@ -788,6 +904,8 @@
                 </div>
                 <div class="pv-ft">
                     <button type="button" class="btn btn-ghost" data-close>बंद करें</button>
+                    <button type="button" class="btn btn-wa" id="pvShare"><i class="ph-bold ph-share-network"></i>
+                        Share</button>
                     <button type="button" class="btn btn-primary" id="pvSave"><i
                             class="ph-bold ph-download-simple"></i> Download PDF</button>
                 </div>
@@ -833,12 +951,14 @@
             var WEBINAR = {
                 title: 'Automate & Scale with WhatsApp — Live Masterclass',
                 date: NEXT_DATE + ' (' + NEXT_DAY + ')',
-                time: '5:00 PM IST',
+                time: '5:00 PM',
                 duration: '60 Minutes (Live + Q&A)',
                 platform: 'Zoom (Online)',
                 zoomId: '821 2031 3197',
                 zoomLink: 'https://us06web.zoom.us/webinar/register/WN_niEhINQWTk-VNDwgB23_Tw'
             };
+
+            var WA_GROUP = 'https://chat.whatsapp.com/L2Ot1quR6goD1WBdhQlHzW';
 
             /* landing page का absolute URL — PDF कहीं भी खुले, link सही रहे */
             var SITE_URL = (function () {
@@ -944,6 +1064,8 @@
                 + '.pdfdoc .pr .tot span:last-child{color:#0f9d58}'
                 + '.pdfdoc .bn{display:block;width:100%;margin-top:14px;border-radius:8px}'
                 + '.pdfdoc .jw{margin:16px 22px 20px;text-align:center}'
+                + '.pdfdoc .jbtn+.jbtn{margin-left:10px}'
+                + '.pdfdoc .jbtn.wa{background:#25D366;color:#06251a}'
                 + '.pdfdoc .jbtn{display:inline-block;padding:13px 30px;border-radius:8px;background:#0f9d58;color:#fff;font-size:13.5px;font-weight:800;text-decoration:none;letter-spacing:.01em}'
                 + '.pdfdoc .jw small{display:block;margin-top:8px;font-size:10px;color:#68757c}'
                 + '.pdfdoc .cta{margin-top:20px;padding:22px;border-radius:10px;text-align:center;background:linear-gradient(160deg,#10241d,#08120f);color:#fff}'
@@ -1042,10 +1164,71 @@
                 return libPromise;
             }
 
-            function makePdf(filename, title, inner, btn) {
+            /* ---------- toast ---------- */
+            var toastEl = null, toastT = 0;
+            function toast(msg) {
+                if (!toastEl) {
+                    toastEl = document.createElement('div');
+                    toastEl.className = 'toast';
+                    document.body.appendChild(toastEl);
+                }
+                toastEl.textContent = '✓  ' + msg;
+                toastEl.classList.add('on');
+                clearTimeout(toastT);
+                toastT = setTimeout(function () { toastEl.classList.remove('on'); }, 2200);
+            }
+
+            function copyText(text) {
+                /* clipboard API fail हो (permission/insecure page) तो पुराने तरीके से copy */
+                function legacy() {
+                    try {
+                        var ta = document.createElement('textarea');
+                        ta.value = text;
+                        ta.setAttribute('readonly', '');
+                        ta.style.cssText = 'position:fixed;left:-9999px;top:0';
+                        document.body.appendChild(ta);
+                        ta.select();
+                        ta.setSelectionRange(0, text.length);
+                        var ok = document.execCommand('copy');
+                        document.body.removeChild(ta);
+                        return ok;
+                    } catch (e) { return false; }
+                }
+
+                return new Promise(function (res, rej) {
+                    function fallback() { legacy() ? res() : rej(new Error('copy failed')); }
+                    try {
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            navigator.clipboard.writeText(text).then(res, fallback);
+                            return;
+                        }
+                    } catch (e) { }
+                    fallback();
+                });
+            }
+
+            /* हर zoom link: पहले clipboard में copy, फिर browser में खुल जाए */
+            document.addEventListener('click', function (e) {
+                var z = e.target.closest && e.target.closest('.js-copyopen');
+                if (!z) return;
+                var url = z.getAttribute('href');
+                if (!url) return;
+                e.preventDefault();
+                var label = z.getAttribute('data-copy') || 'Link';
+                Promise.resolve(copyText(url)).then(function () {
+                    toast(label + ' copied — खुल रहा है…');
+                }, function () {
+                    toast('Copy नहीं हो पाया — link खुल रहा है');
+                });
+                /* toast दिखने के बाद redirect. (delay के बाद window.open popup-blocker
+                   में फँस जाता, इसलिए उसी tab में भेजते हैं) */
+                setTimeout(function () { window.location.href = url; }, 900);
+            });
+
+            /* ---------- pdf बनाना ---------- */
+            function buildPdf(inner) {
                 var el = getStage();
                 el.innerHTML = inner;
-                busy(btn, true);
 
                 /* html2pdf capture से पहले page को top पर लाना ज़रूरी है: वो source को अपनी
                    fixed, आधी-काली overlay में रखकर render करता है — page scrolled हो तो
@@ -1058,26 +1241,110 @@
                 function restore() {
                     document.body.style.overflow = lock;
                     window.scrollTo(sx, sy);
-                    busy(btn, false);
                     el.innerHTML = '';
                 }
 
-                loadLib().then(function () { return ready(el); }).then(function () {
+                return loadLib().then(function () { return ready(el); }).then(function () {
                     /* enableLinks html2pdf का अपना feature है — <a> अपने आप clickable PDF link बनते हैं */
                     return html2pdf().set({
                         margin: MARGIN,
-                        filename: filename,
                         enableLinks: true,
                         image: { type: 'jpeg', quality: 0.98 },
                         html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', scrollX: 0, scrollY: 0, logging: false },
                         jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
                         pagebreak: { mode: 'legacy' }
-                    }).from(el).save();
-                }).then(restore)['catch'](function (err) {
-                    console.error('PDF banane me dikkat', err);
-                    restore();
-                    printFallback(title, inner);
+                    }).from(el).outputPdf('blob');
+                }).then(function (blob) { restore(); return blob; }, function (err) { restore(); throw err; });
+            }
+
+            function saveBlob(blob, filename) {
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+            }
+
+            function shareText(doc) {
+                return doc.title + ' — ' + WEBINAR.title + '\n'
+                    + WEBINAR.date + ', ' + WEBINAR.time + '\n'
+                    + 'WhatsApp Group: ' + WA_GROUP + '\n'
+                    + 'Zoom: ' + WEBINAR.zoomLink;
+            }
+
+            /* बनी हुई PDF cache — share user gesture के अंदर ही चलना चाहिए, इसलिए
+               preview खुलते ही file background में तैयार कर लेते हैं */
+            var blobCache = {};
+            function getPdfBlob(doc) {
+                var c = blobCache[doc.filename];
+                if (c) return c.promise;
+                c = blobCache[doc.filename] = {};
+                c.promise = buildPdf(doc.inner).then(function (blob) {
+                    c.blob = blob;
+                    return blob;
+                }, function (err) {
+                    delete blobCache[doc.filename];
+                    throw err;
                 });
+                return c.promise;
+            }
+
+            function downloadPdf(doc, btn) {
+                busy(btn, true);
+                getPdfBlob(doc).then(function (blob) {
+                    saveBlob(blob, doc.filename);
+                    busy(btn, false);
+                    toast('PDF download हो गई');
+                })['catch'](function (err) {
+                    console.error('PDF banane me dikkat', err);
+                    busy(btn, false);
+                    printFallback(doc.title, doc.inner);
+                });
+            }
+
+            /* Share सिर्फ share window खोलता है — file save नहीं करता (उसके लिए Download है) */
+            function sharePdf(doc, btn) {
+                var cached = blobCache[doc.filename] && blobCache[doc.filename].blob;
+                if (cached) { shareBlob(cached, doc); return; }   /* सीधे gesture के अंदर */
+
+                busy(btn, true);
+                getPdfBlob(doc).then(function (blob) {
+                    busy(btn, false);
+                    shareBlob(blob, doc);
+                })['catch'](function (err) {
+                    console.error('Share nahi ho paaya', err);
+                    busy(btn, false);
+                    shareLink(shareText(doc));
+                });
+            }
+
+            function shareBlob(blob, doc) {
+                var text = shareText(doc);
+                var file = null;
+                try { file = new File([blob], doc.filename, { type: 'application/pdf' }); } catch (e) { }
+
+                if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+                    navigator.share({ files: [file], title: doc.title, text: text })['catch'](function (err) {
+                        /* AbortError = user ने खुद cancel किया, कुछ मत कहो */
+                        if (err && err.name === 'NotAllowedError') toast('एक बार फिर Share दबाएँ');
+                    });
+                    return;
+                }
+                shareLink(text);
+            }
+
+            /* file attach नहीं हो सकती — details का share window खोल देते हैं */
+            function shareLink(text) {
+                if (navigator.share) {
+                    navigator.share({ title: WEBINAR.title, text: text, url: SITE_URL })['catch'](function () { });
+                    return;
+                }
+                copyText(text);
+                toast('Details copied — WhatsApp खुल रहा है');
+                window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener');
             }
 
             /* ---------- preview ----------
@@ -1090,6 +1357,7 @@
             var pvTitle = document.getElementById('pvTitle');
             var pvSub = document.getElementById('pvSub');
             var pvSave = document.getElementById('pvSave');
+            var pvShare = document.getElementById('pvShare');
             var current = null;
 
             function fitPreview() {
@@ -1102,7 +1370,7 @@
             }
 
             function openPreview(doc) {
-                if (!pv) { makePdf(doc.filename, doc.title, doc.inner, null); return; }
+                if (!pv) { downloadPdf(doc, null); return; }
                 current = doc;
                 pvDoc.innerHTML = doc.inner;
                 pvTitle.textContent = doc.title;
@@ -1113,6 +1381,10 @@
                 /* image/font आने के बाद height बदल सकती है */
                 ready(pvDoc).then(fitPreview);
                 setTimeout(fitPreview, 350);
+                /* Share/Download तुरंत काम करे — file अभी से बनने लगे */
+                setTimeout(function () {
+                    if (current === doc) getPdfBlob(doc)['catch'](function () { });
+                }, 400);
             }
 
             function closePreview() {
@@ -1132,8 +1404,10 @@
                 });
                 window.addEventListener('resize', fitPreview);
                 pvSave.addEventListener('click', function () {
-                    if (!current) return;
-                    makePdf(current.filename, current.title, current.inner, pvSave);
+                    if (current) downloadPdf(current, pvSave);
+                });
+                pvShare.addEventListener('click', function () {
+                    if (current) sharePdf(current, pvShare);
                 });
             }
 
@@ -1164,7 +1438,8 @@
                     + '<div class="tot"><span>Total Payable</span><span>Rs. 0</span></div></div>'
                     + '</div>'
                     + '<img class="bn" src="Images/banner.webp" alt="" onerror="this.style.display=&#39;none&#39;">'
-                    + '<div class="jw"><a class="jbtn" href="' + esc(WEBINAR.zoomLink) + '">▶  Join Zoom Webinar</a>'
+                    + '<div class="jw"><a class="jbtn wa js-copyopen" data-copy="WhatsApp group link" href="' + esc(WA_GROUP) + '">Join WhatsApp Group</a>'
+                    + '<a class="jbtn js-copyopen" data-copy="Zoom link" href="' + esc(WEBINAR.zoomLink) + '">Join Webinar</a>'
                     + '<small>Webinar ID: ' + esc(WEBINAR.zoomId) + ' &nbsp;·&nbsp; ' + esc(WEBINAR.date) + ', ' + esc(WEBINAR.time) + '</small></div>'
                     + '<div class="ft">यह ticket आपके registration का proof है. Live session से 10 minute पहले Zoom link से join करें.<br>© Dipanshu Vijay — Business Automation Expert</div>';
                 var who = attendee.name === '—' ? 'Guest' : attendee.name;
@@ -1212,7 +1487,8 @@
                     + items
                     + '<div class="cta"><b>ये सब live करके दिखाया जाएगा</b>'
                     + '<p>' + esc(WEBINAR.date) + ' · ' + esc(WEBINAR.time) + ' · Zoom पर 60 minute की FREE Masterclass — <s>Rs. 499</s> अब Rs. 0</p>'
-                    + '<a class="jbtn" href="' + esc(WEBINAR.zoomLink) + '">▶  Join Zoom Webinar</a>'
+                    + '<a class="jbtn wa js-copyopen" data-copy="WhatsApp group link" href="' + esc(WA_GROUP) + '">Join WhatsApp Group</a>'
+                    + '<a class="jbtn js-copyopen" data-copy="Zoom link" href="' + esc(WEBINAR.zoomLink) + '">Join Webinar</a>'
                     + '<a class="alt" href="' + esc(SITE_URL) + '">Masterclass की पूरी details देखें →</a></div>'
                     + '</div>'
                     + '<div class="ft">Live Masterclass · ' + esc(WEBINAR.date) + ' · ' + esc(WEBINAR.time) + ' · Zoom ID ' + esc(WEBINAR.zoomId) + '<br>© Dipanshu Vijay — Business Automation Expert</div>';
