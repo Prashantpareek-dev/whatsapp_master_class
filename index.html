@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover" />
     <title>Automate &amp; Scale with WhatsApp Masterclass | Dipanshu Vijay</title>
     <meta name="description"
         content="WhatsApp Automation की FREE Masterclass — Number Ban से बचें, Broadcast, Follow-up, Chatbot, Lead Management और Official WhatsApp Business API सीखें. Dipanshu Vijay के साथ Live." />
@@ -33,6 +33,8 @@
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css" />
+    <!-- thank-you page is fetched in the background, so the post-submit redirect paints instantly -->
+    <link rel="prefetch" href="thankyou.html" as="document" />
 
     <style>
         :root {
@@ -64,7 +66,11 @@
 
         html {
             scroll-behavior: smooth;
-            -webkit-text-size-adjust: 100%
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            /* pinch-zoom + double-tap zoom दोनों बंद */
+            touch-action: pan-x pan-y;
+            -ms-touch-action: pan-x pan-y
         }
 
         body {
@@ -73,18 +79,9 @@
             color: var(--ink);
             line-height: 1.6;
             overflow-x: hidden;
+            touch-action: pan-x pan-y;
             -webkit-font-smoothing: antialiased;
             padding-bottom: 0
-        }
-
-        body.has-sticky {
-            padding-bottom: 78px
-        }
-
-        @media(min-width:900px) {
-            body.has-sticky {
-                padding-bottom: 92px
-            }
         }
 
         img {
@@ -134,7 +131,7 @@
         }
 
         .sec {
-            padding: 34px 0
+            padding: 10px 0
         }
 
         @media(min-width:900px) {
@@ -2145,6 +2142,13 @@
             position: relative
         }
 
+        /* control shell — keeps the icons centred on the input even when the
+           error line below makes the .field taller */
+        .field .ipwrap {
+            position: relative;
+            display: block
+        }
+
         .field i {
             position: absolute;
             left: 15px;
@@ -2165,6 +2169,15 @@
             font-size: 15px;
             outline: 0;
             transition: border-color .18s ease, box-shadow .18s ease
+        }
+
+        /* iOS पर focus होते ही page zoom न हो — mobile में inputs 16px */
+        @media(max-width:900px) {
+
+            .field input,
+            .field select {
+                font-size: 16px
+            }
         }
 
         .field input::placeholder {
@@ -2225,7 +2238,13 @@
             background: #f7fcf9
         }
 
-        .field.ok:after {
+        .field.ok select {
+            border-color: rgba(15, 157, 88, .55);
+            background: #f7fcf9
+        }
+
+        .field.ok .ipwrap:after,
+        .field-q.ok .selwrap:after {
             content: "";
             position: absolute;
             right: 18px;
@@ -2237,6 +2256,39 @@
             border-width: 0 2.2px 2.2px 0;
             transform: rotate(42deg);
             pointer-events: none
+        }
+
+        /* dropdowns keep their caret, so the tick sits just left of it */
+        .field-sel.ok .ipwrap:after,
+        .field-q.ok .selwrap:after {
+            right: 40px
+        }
+
+        .field-sel.ok .caret,
+        .field-q.ok .selwrap .caret {
+            color: var(--green-deep)
+        }
+
+        /* 6) native dropdown follows our theme, not the browser's dark mode */
+        #regForm input,
+        #regForm select,
+        #regForm textarea {
+            color-scheme: light;
+            accent-color: var(--green-deep)
+        }
+
+        .field select option,
+        .field-q select option {
+            background: #fff;
+            color: var(--ink);
+            padding: 10px
+        }
+
+        .field select option:checked,
+        .field-q select option:checked {
+            background: var(--green-deep);
+            color: #fff;
+            font-weight: 700
         }
 
         /* ---- two-step form ---- */
@@ -2318,6 +2370,11 @@
 
         .field-q .selwrap {
             position: relative
+        }
+
+        .field-q.ok select {
+            border-color: rgba(15, 157, 88, .55);
+            background: #f7fcf9
         }
 
         .field-q .selwrap i {
@@ -2490,6 +2547,11 @@
             color: var(--ink-soft)
         }
 
+        /* trust badge — only shown on mobile, pinned to the right corner */
+        .t3-badge {
+            display: none
+        }
+
         @media(max-width:520px) {
             .trust3 {
                 grid-template-columns: 1fr;
@@ -2498,6 +2560,47 @@
 
             .trust3>div+div {
                 border-left: 0
+            }
+
+            .trust3>div {
+                padding: 0 14px
+            }
+
+            .t3-badge {
+                display: block;
+                margin-left: auto;
+                font-size: 22px;
+                color: var(--green-deep);
+                opacity: .92
+            }
+        }
+
+        /* 5) mobile: form card runs edge to edge — drop the wrap + panel padding */
+        @media(max-width:640px) {
+            #register>.wrap {
+                width: 100%
+            }
+
+            #register .mr {
+                padding: 0px 0;
+                border-radius: 0;
+                border-left: 0;
+                border-right: 0
+            }
+
+            #register .mentor {
+                padding: 0 14px
+            }
+
+            #register .regcard {
+                border-radius: 0;
+                padding: 22px 16px
+            }
+
+            /* edge-to-edge panel के नीचे drop shadow grey smudge जैसा दिखता था */
+            #register .mr,
+            #register .regcard {
+                box-shadow: none
             }
         }
 
@@ -2880,9 +2983,47 @@
             border-left: 1px solid var(--line)
         }
 
+        /* mobile: 2x2 grid — icon ऊपर, number-label नीचे (centered).
+           Horizontal layout में "Businesses Empowered" जैसे labels wrap होकर
+           rows को uneven बना देते थे. */
         @media(max-width:759px) {
-            .stat:nth-child(odd) {
+            .stats {
+                gap: 0;
+                padding: 4px
+            }
+
+            .stat {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 10px;
+                padding: 22px 10px;
                 border-left: 0
+            }
+
+            /* 2 columns × 2 rows का proper cross divider */
+            .stat:nth-child(even) {
+                border-left: 1px solid var(--line)
+            }
+
+            .stat:nth-child(n+3) {
+                border-top: 1px solid var(--line)
+            }
+
+            .stat .ico-round {
+                width: 46px;
+                height: 46px;
+                font-size: 22px
+            }
+
+            .stat .v {
+                font-size: 25px
+            }
+
+            .stat b {
+                font-size: 12px;
+                line-height: 1.35;
+                margin-top: 3px
             }
         }
 
@@ -3036,6 +3177,18 @@
 
         .ftr a:hover {
             color: #fff
+        }
+
+        /* fine print — present but deliberately quiet */
+        .ftr-note {
+            margin: 16px 0 0;
+            padding-top: 13px;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            font-size: 11px;
+            line-height: 1.55;
+            font-weight: 400;
+            color: #667d74;
+            max-width: 900px
         }
 
         /* sticky bottom cta */
@@ -3679,6 +3832,34 @@
 </head>
 
 <body>
+    <!-- Zoom lock (mobile + desktop):
+         iOS Safari viewport meta का user-scalable=no ignore करता है, इसलिए pinch/gesture
+         events manually रोके गए हैं. Desktop पर Ctrl/Cmd + wheel और Ctrl/Cmd + "+"/"-" block हैं.
+         Browser menu वाला zoom और OS-level accessibility zoom किसी भी site से नहीं रुकता. -->
+    <script>
+        (function () {
+            var stop = function (e) { e.preventDefault(); };
+            document.addEventListener('gesturestart', stop, { passive: false });
+            document.addEventListener('gesturechange', stop, { passive: false });
+            document.addEventListener('gestureend', stop, { passive: false });
+            document.addEventListener('touchmove', function (e) {
+                if (e.touches && e.touches.length > 1) e.preventDefault();
+            }, { passive: false });
+
+            /* Desktop: Ctrl/Cmd + scroll wheel और Mac trackpad pinch zoom रोका */
+            document.addEventListener('wheel', function (e) {
+                if (e.ctrlKey || e.metaKey) e.preventDefault();
+            }, { passive: false });
+
+            /* Desktop: Ctrl/Cmd + "+" / "-" .
+               Ctrl+0 (reset zoom) जानबूझकर छोड़ा है ताकि user कभी फँसे नहीं। */
+            document.addEventListener('keydown', function (e) {
+                if (!(e.ctrlKey || e.metaKey)) return;
+                var k = e.key;
+                if (k === '+' || k === '=' || k === '-' || k === '_') e.preventDefault();
+            }, { passive: false });
+        })();
+    </script>
 
     <!-- official WhatsApp glyph, reused via <use href="#wa-glyph"> -->
     <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -3934,7 +4115,7 @@
                 </div>
             </div>
             <a class="btn btn-primary wcta rv" href="#register" data-cta="webinar">
-                <i class="ph-fill ph-gift"></i> CLAIM YOUR SEAT <s>&#8377;499</s> <span class="free">FREE</span>
+                <i class="ph-fill ph-gift"></i> CLAIM YOUR SEAT <s>&#8377;499</s> <span class="free">&#8377;0/-</span>
                 <span class="arrow"><i class="ph-bold ph-caret-right"></i></span>
             </a>
             <div class="wassure rv">
@@ -4263,7 +4444,7 @@
             </div>
 
             <a class="btn btn-primary wcta rv" href="#register" data-cta="mentor">
-                <i class="ph-fill ph-gift"></i> Claim Your Seat <s>&#8377;499</s> <span class="free">FREE</span>
+                <i class="ph-fill ph-gift"></i> Claim Your Seat <s>&#8377;499</s> <span class="free">&#8377;0/-</span>
                 <span class="arrow"><i class="ph-bold ph-caret-right"></i></span>
             </a>
         </div>
@@ -4326,8 +4507,8 @@
 
                 <!-- registration -->
                 <div class="regcard" id="regcard">
-                    <h3>Register करें और अपनी Seat <span class="gr">पक्की करें</span></h3>
-                    <p class="note">यह Masterclass पूरी तरह FREE है<br /><em>लेकिन Seats Limited हैं!</em></p>
+                    <h3>Register Now and <span class="gr">Confirm Your Seat</span></h3>
+                    <p class="note">This Masterclass is completely FREE<br /><em>But Seats are Limited!</em></p>
 
 
 
@@ -4345,24 +4526,31 @@
                         <!-- ===== step 1: contact ===== -->
                         <div class="fstep is-on" data-step="1">
                             <div class="field" data-v="fullname">
-                                <i class="ph-bold ph-user"></i>
-                                <input type="text" name="full_name" placeholder="Full Name" autocomplete="name"
-                                    maxlength="60" />
-                                <span class="err">पूरा नाम डालें (कम से कम 3 अक्षर, numbers की अनुमति नहीं)</span>
+                                <div class="ipwrap">
+                                    <i class="ph-bold ph-user"></i>
+                                    <input type="text" name="full_name" placeholder="Full Name" autocomplete="name"
+                                        maxlength="60" />
+                                </div>
+                                <span class="err">Please enter your full name (at least 3 letters, no numbers)</span>
                             </div>
                             <div class="field" data-v="phone">
-                                <i class="ph-bold ph-whatsapp-logo"></i>
-                                <input type="tel" name="whatsapp_number" placeholder="WhatsApp Number"
-                                    inputmode="numeric" autocomplete="tel" maxlength="10" />
-                                <span class="err">10 अंकों का number डालें जो 6-9 से शुरू होता हो</span>
+                                <div class="ipwrap">
+                                    <i class="ph-bold ph-whatsapp-logo"></i>
+                                    <input type="tel" name="whatsapp_number" placeholder="WhatsApp Number"
+                                        inputmode="numeric" autocomplete="tel" maxlength="10" />
+                                </div>
+                                <span class="err">Enter a 10-digit number starting with 6-9</span>
                             </div>
                             <div class="field" data-v="email">
-                                <i class="ph-bold ph-envelope-simple"></i>
-                                <input type="email" name="email" placeholder="Email Id" autocomplete="email"
-                                    maxlength="80" />
-                                <span class="err">valid email address डालें (जैसे name@company.com)</span>
+                                <div class="ipwrap">
+                                    <i class="ph-bold ph-envelope-simple"></i>
+                                    <input type="email" name="email" placeholder="Email Id" autocomplete="email"
+                                        maxlength="80" />
+                                </div>
+                                <span class="err">Enter a valid email address (e.g. name@company.com)</span>
                             </div>
-                            <div class="field" data-v="industry">
+                            <div class="field field-sel" data-v="industry">
+                                <div class="ipwrap">
                                 <i class="ph-bold ph-briefcase"></i>
                                 <select name="business_industry">
                                     <option value="">Business Industry</option>
@@ -4387,7 +4575,8 @@
                                     <option>Other</option>
                                 </select>
                                 <i class="ph-bold ph-caret-down caret"></i>
-                                <span class="err">कृपया अपनी industry चुनें</span>
+                                </div>
+                                <span class="err">Please select your industry</span>
                             </div>
 
                             <button class="btn btn-primary btn-block btn-next" type="button" data-next>Continue <i
@@ -4413,7 +4602,7 @@
                                     </select>
                                     <i class="ph-bold ph-caret-down caret"></i>
                                 </div>
-                                <span class="err">कृपया एक option चुनें</span>
+                                <span class="err">Please select an option</span>
                             </div>
 
                             <div class="field field-q" data-v="priority">
@@ -4432,7 +4621,7 @@
                                     </select>
                                     <i class="ph-bold ph-caret-down caret"></i>
                                 </div>
-                                <span class="err">कृपया एक option चुनें</span>
+                                <span class="err">Please select an option</span>
                             </div>
 
                             <div class="field field-q" data-v="volume">
@@ -4451,7 +4640,7 @@
                                     </select>
                                     <i class="ph-bold ph-caret-down caret"></i>
                                 </div>
-                                <span class="err">कृपया एक option चुनें</span>
+                                <span class="err">Please select an option</span>
                             </div>
 
                             <div class="field field-q" data-v="timeline">
@@ -4469,14 +4658,14 @@
                                     </select>
                                     <i class="ph-bold ph-caret-down caret"></i>
                                 </div>
-                                <span class="err">कृपया एक option चुनें</span>
+                                <span class="err">Please select an option</span>
                             </div>
 
                             <div class="field field-check" data-v="consent">
                                 <label class="checkline"><input type="checkbox" name="consent" value="yes" /><span>I
                                         agree to receive masterclass reminders and relevant WhatsApp communication from
                                         WA SIMPLE. I can opt out anytime.</span></label>
-                                <span class="err">आगे बढ़ने के लिए consent देना ज़रूरी है</span>
+                                <span class="err">Please accept the consent to continue</span>
                             </div>
 
                             <div class="steprow">
@@ -4505,19 +4694,22 @@
 
                     <div class="success" id="success">
                         <div class="tick"><i class="ph-bold ph-check"></i></div>
-                        <h3>आपकी Seat Reserve हो गई!</h3>
-                        <p class="note">Masterclass का link और reminder आपके WhatsApp number पर भेज दिया जाएगा.</p>
+                        <h3>Your Seat is Reserved!</h3>
+                        <p class="note">The masterclass link and reminder will be sent to your WhatsApp number.</p>
                     </div>
 
                     <div class="trust3">
                         <div><i class="ph-bold ph-check-circle"></i>
-                            <div><b>100% Free</b><span>No Hidden Charges</span></div>
+                            <div><b>100% Free Masterclass</b><span>No Hidden Charges</span></div>
+                            <i class="ph-bold ph-seal-check t3-badge" aria-hidden="true"></i>
                         </div>
                         <div><i class="ph-bold ph-check-circle"></i>
-                            <div><b>No Spam</b><span>Promise</span></div>
+                            <div><b>No Spam Content</b><span>Promise</span></div>
+                            <i class="ph-bold ph-shield-check t3-badge" aria-hidden="true"></i>
                         </div>
                         <div><i class="ph-bold ph-check-circle"></i>
                             <div><b>Only Valuable Content</b><span>No Filler, Only Actionable</span></div>
+                            <i class="ph-bold ph-medal t3-badge" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
@@ -4632,7 +4824,7 @@
             <h2><i class="ph-bold ph-whatsapp-logo"></i> अब समय है WhatsApp को अपने Business का सबसे Powerful Growth
                 Engine बनाने का!</h2>
             <div>
-                <a class="btn btn-primary btn-block" href="#register" data-cta="final">YES! मुझे Free Masterclass में
+                <a class="btn btn-primary btn-block" href="#register" data-cta="final">YES! मुझे Masterclass में
                     Register करना है</a>
                 <p class="sub"><i class="ph-bold ph-hourglass-medium"></i> Limited Seats – Register Now!</p>
             </div>
@@ -4643,6 +4835,11 @@
         <div class="wrap ftr-in">
             <span>© <span id="yr"></span> Dipanshu Vijay. All rights reserved.</span>
             <span>यह site Facebook / Meta का हिस्सा नहीं है और न ही Meta द्वारा endorsed है.</span>
+        </div>
+        <div class="wrap">
+            <p class="ftr-note">Disclaimer: This webinar is for educational purposes only. Results may vary, and no
+                guarantee of leads, sales, approvals, or account safety is made. Meta/WhatsApp is not affiliated with or
+                endorsing this webinar.</p>
         </div>
     </footer>
 
@@ -4657,7 +4854,7 @@
                     <em style="font-style:normal"><i class="ph-bold ph-timer"></i>60 Minutes</em>
                 </span>
             </div>
-            <a class="btn btn-primary" href="#register" data-cta="sticky">CLAIM YOUR SEAT <s>&#8377;499</s> FREE</a>
+            <a class="btn btn-primary" href="#register" data-cta="sticky">CLAIM YOUR SEAT <s>&#8377;499</s> <span class="free">&#8377;0/-</span></a>
         </div>
     </div>
 
@@ -4666,7 +4863,6 @@
             "use strict";
             var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             document.getElementById('yr').textContent = new Date().getFullYear();
-            document.body.classList.add('has-sticky');
 
 
             /* ---- CTA scroll target ----
@@ -4793,15 +4989,27 @@
                 } else { warm(); }
             }
 
-            /* ---- sticky bottom CTA ---- */
+            /* ---- sticky bottom CTA ----
+               hidden over the hero, and hidden again wherever the page already
+               shows a CTA of its own: the register form, the closing CTA and the
+               footer at the bottom. */
             var sticky = document.getElementById('stickyCta'),
                 hero = document.getElementById('top'),
-                reg = document.getElementById('register');
-            window.addEventListener('scroll', function () {
-                var y = window.scrollY, heroH = hero.offsetHeight, regTop = reg.getBoundingClientRect().top;
-                var inReg = regTop < window.innerHeight && regTop > -reg.offsetHeight;
-                if (y > heroH * 0.6 && !inReg) { sticky.classList.add('show'); } else { sticky.classList.remove('show'); }
-            }, { passive: true });
+                hideOver = [document.getElementById('register'),
+                document.querySelector('.final'),
+                document.querySelector('.ftr')].filter(Boolean);
+
+            function onScreen(el) {
+                var r = el.getBoundingClientRect();
+                return r.top < window.innerHeight && r.bottom > 0;
+            }
+            function syncSticky() {
+                var show = window.scrollY > hero.offsetHeight * 0.6 && !hideOver.some(onScreen);
+                sticky.classList.toggle('show', show);
+            }
+            window.addEventListener('scroll', syncSticky, { passive: true });
+            window.addEventListener('resize', syncSticky, { passive: true });
+            syncSticky();
 
             /* ---- UTM / tracking capture ---- */
             var params = new URLSearchParams(location.search);
@@ -4910,7 +5118,7 @@
                 var ok = true;
                 stepFields[n].forEach(function (key) { if (!mark(key, !rules[key]())) ok = false; });
                 if (!ok) {
-                    showFormError('कुछ fields अधूरे हैं — नीचे highlight किए गए fields ठीक करें।');
+                    showFormError('Some fields are incomplete — please fix the highlighted fields below.');
                     var bad = firstInvalid();
                     if (bad) {
                         var input = bad.querySelector('input,select');
@@ -4958,6 +5166,17 @@
             /* phone: digits (and a leading +) only — no letters */
             filterInput(form.whatsapp_number, /[^\d+]/g);
 
+            /* dropdowns: mark verified as soon as a real option is picked */
+            form.querySelectorAll('select').forEach(function (sel) {
+                sel.addEventListener('change', function () {
+                    var f = sel.closest('.field');
+                    if (!f) return;
+                    var good = !!sel.value;
+                    f.classList.toggle('ok', good);
+                    if (good) f.classList.remove('invalid');
+                });
+            });
+
             /* check name / phone / email the moment the visitor leaves the field */
             var liveRules = { full_name: 'fullname', whatsapp_number: 'phone', email: 'email' };
             Object.keys(liveRules).forEach(function (name) {
@@ -4972,17 +5191,33 @@
                 });
             });
 
-            function sendToSheet(data) {
-                if (!SHEET_ENDPOINT) { console.warn('SHEET_ENDPOINT is empty — lead not sent:', data); return Promise.resolve(); }
+            /* fire-and-forget dispatch — returns true once the browser has taken
+               ownership of the request, which is all we need before navigating.
+               sendBeacon is built for exactly this: the POST is queued by the
+               browser and completes on its own after the page is gone. */
+            function dispatchLead(data) {
+                if (!SHEET_ENDPOINT) { console.warn('SHEET_ENDPOINT is empty — lead not sent:', data); return false; }
+                var body = JSON.stringify(data);
                 /* text/plain keeps it a simple request, so no CORS preflight against Apps Script */
-                return fetch(SHEET_ENDPOINT, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify(data),
-                    keepalive: true /* the POST survives the redirect to the thank-you page */
-                }).then(function (r) { return r.json(); }).then(function (res) {
-                    if (!res || res.status !== 'ok') throw new Error((res && res.message) || 'Sheet rejected the lead');
-                });
+                var TYPE = 'text/plain;charset=utf-8';
+                if (navigator.sendBeacon) {
+                    try {
+                        if (navigator.sendBeacon(SHEET_ENDPOINT, new Blob([body], { type: TYPE }))) return true;
+                    } catch (err) { /* fall through to fetch */ }
+                }
+                try {
+                    /* keepalive lets the POST outlive the navigation too */
+                    fetch(SHEET_ENDPOINT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': TYPE },
+                        body: body,
+                        keepalive: true
+                    })['catch'](function (err) { console.error('Lead POST failed', err); });
+                    return true;
+                } catch (err) {
+                    console.error('Lead POST could not start', err);
+                    return false;
+                }
             }
 
             form.addEventListener('submit', function (e) {
@@ -4991,7 +5226,7 @@
                 submitting = true;
                 var btn = form.querySelector('.btn-submit');
                 var btnText = btn.textContent;
-                btn.disabled = true; btn.textContent = 'Seat reserve की जा रही है…';
+                btn.disabled = true; btn.textContent = 'Reserving your seat…';
                 fillHidden(form);
 
                 var data = Object.fromEntries(new FormData(form).entries());
@@ -4999,28 +5234,20 @@
 
                 try { sessionStorage.setItem('dv_lead', JSON.stringify(data)); } catch (err) { }
 
-                /* the lead POST and the redirect run in parallel — keepalive lets the request
-                   finish after navigation, so a slow Sheets call never holds the visitor here */
-                var left = false;
+                /* the visitor never waits on Sheets: the request is handed to the
+                   browser, then we navigate in the same tick */
                 function leave() {
-                    if (left) return;
-                    left = true;
                     var first = String(data.full_name || '').trim().split(' ')[0];
-                    window.location.href = THANK_YOU_URL + (first ? '?n=' + encodeURIComponent(first) : '');
+                    window.location.replace(THANK_YOU_URL + (first ? '?n=' + encodeURIComponent(first) : ''));
                 }
-                var failsafe = setTimeout(leave, 2500);
 
-                sendToSheet(data).then(function () {
-                    clearTimeout(failsafe);
+                if (dispatchLead(data)) {
                     leave();
-                }).catch(function (err) {
-                    clearTimeout(failsafe);
-                    if (left) return; /* already on the thank-you page */
-                    console.error('Lead submit failed', err);
+                } else {
                     submitting = false;
                     btn.disabled = false; btn.textContent = btnText;
-                    showFormError('Submit नहीं हो पाया. कृपया दोबारा try करें या WhatsApp पर संपर्क करें।');
-                });
+                    showFormError('Could not submit. Please try again or reach us on WhatsApp.');
+                }
             });
         })();
     </script>

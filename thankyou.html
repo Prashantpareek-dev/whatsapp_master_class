@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover" />
     <title>Seat Confirmed | Automate &amp; Scale with WhatsApp Masterclass</title>
     <meta name="description" content="आपकी FREE WhatsApp Automation Masterclass की seat reserve हो गई है." />
     <meta name="robots" content="noindex, nofollow" />
@@ -41,7 +41,12 @@
         html,
         body {
             margin: 0;
-            padding: 0
+            padding: 0;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            /* pinch-zoom + double-tap zoom दोनों बंद */
+            touch-action: pan-x pan-y;
+            -ms-touch-action: pan-x pan-y
         }
 
         body {
@@ -410,6 +415,35 @@
             overflow: hidden
         }
 
+        /* mobile: पूरा layout edge-to-edge — body का side padding हटाया, .ty card
+           screen की पूरी width लेता है, और e-ticket .ty के 16px padding से भी बाहर
+           निकलकर screen को touch करता है */
+        @media(max-width:720px) {
+
+            body {
+                padding: 0;
+                /* sub-pixel rounding से horizontal scrollbar न आए */
+                overflow-x: hidden
+            }
+
+            .ty {
+                border-left: 0;
+                border-right: 0;
+                border-radius: 0;
+                padding: 26px 16px;
+                /* overflow:hidden था, वरना ticket का full-bleed यहीं clip हो जाता */
+                overflow: visible
+            }
+
+            .ticket {
+                margin-left: -16px;
+                margin-right: -16px;
+                border-left: 0;
+                border-right: 0;
+                border-radius: 0
+            }
+        }
+
         .tk-top {
             display: flex;
             flex-wrap: wrap;
@@ -753,6 +787,34 @@
 </head>
 
 <body>
+    <!-- Zoom lock (mobile + desktop):
+         iOS Safari viewport meta का user-scalable=no ignore करता है, इसलिए pinch/gesture
+         events manually रोके गए हैं. Desktop पर Ctrl/Cmd + wheel और Ctrl/Cmd + "+"/"-" block हैं.
+         Browser menu वाला zoom और OS-level accessibility zoom किसी भी site से नहीं रुकता. -->
+    <script>
+        (function () {
+            var stop = function (e) { e.preventDefault(); };
+            document.addEventListener('gesturestart', stop, { passive: false });
+            document.addEventListener('gesturechange', stop, { passive: false });
+            document.addEventListener('gestureend', stop, { passive: false });
+            document.addEventListener('touchmove', function (e) {
+                if (e.touches && e.touches.length > 1) e.preventDefault();
+            }, { passive: false });
+
+            /* Desktop: Ctrl/Cmd + scroll wheel और Mac trackpad pinch zoom रोका */
+            document.addEventListener('wheel', function (e) {
+                if (e.ctrlKey || e.metaKey) e.preventDefault();
+            }, { passive: false });
+
+            /* Desktop: Ctrl/Cmd + "+" / "-" .
+               Ctrl+0 (reset zoom) जानबूझकर छोड़ा है ताकि user कभी फँसे नहीं। */
+            document.addEventListener('keydown', function (e) {
+                if (!(e.ctrlKey || e.metaKey)) return;
+                var k = e.key;
+                if (k === '+' || k === '=' || k === '-' || k === '_') e.preventDefault();
+            }, { passive: false });
+        })();
+    </script>
     <main class="wrap">
         <div class="ty">
             <div class="ty-head">
