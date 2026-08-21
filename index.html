@@ -3407,6 +3407,77 @@
             transform: translateY(0)
         }
 
+        /* full-screen loading — submit के बाद visitor को दिखे कि काम चल रहा है,
+           और screen block होने से दोबारा tap/back की गुंजाइश भी नहीं बचती.
+           z-index sticky (70) और header (60) दोनों से ऊपर. */
+        .loadscreen {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            background: rgba(6, 18, 14, .84);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            opacity: 0;
+            transition: opacity .2s ease
+        }
+
+        /* .loadscreen का display:grid, [hidden] के UA display:none को हरा देता है */
+        .loadscreen[hidden] {
+            display: none
+        }
+
+        .loadscreen.show {
+            opacity: 1
+        }
+
+        .loadscreen-in {
+            display: grid;
+            justify-items: center;
+            gap: 14px;
+            text-align: center;
+            color: #fff
+        }
+
+        .loadring {
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, .16);
+            border-top-color: var(--green);
+            /* page पर "spin" नाम के दो अलग keyframes पहले से हैं (एक translate वाला),
+               इसलिए यहाँ अपना नाम रखा है */
+            animation: dvspin .8s linear infinite
+        }
+
+        @keyframes dvspin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .loadscreen-in b {
+            font-size: 17px;
+            font-weight: 800
+        }
+
+        .loadscreen-in .loadsub {
+            font-size: 13.5px;
+            color: rgba(255, 255, 255, .72)
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            .loadring {
+                animation-duration: 2.4s
+            }
+
+            .loadscreen {
+                transition: none
+            }
+        }
+
         .sticky-in {
             display: flex;
             align-items: center;
@@ -5058,6 +5129,15 @@
         </div>
     </div>
 
+    <!-- form submit होते ही full-screen loading -->
+    <div class="loadscreen" id="dvLoad" hidden>
+        <div class="loadscreen-in" role="status" aria-live="polite">
+            <span class="loadring" aria-hidden="true"></span>
+            <b>Reserving your seat&hellip;</b>
+            <span class="loadsub">एक moment &mdash; आपकी details save हो रही हैं</span>
+        </div>
+    </div>
+
     <script>
         (function () {
             "use strict";
@@ -5343,7 +5423,22 @@
             var stepFill = document.getElementById('stepFill');
             var steps = form.querySelectorAll('.fstep');
             var submitting = false, currentStep = 1;
+            var loadScreen = document.getElementById('dvLoad');
+            var submitBtn = form.querySelector('.btn-submit');
+            var submitBtnText = submitBtn ? submitBtn.textContent : '';
             fillHidden(form);
+
+            function showLoading(on) {
+                if (!loadScreen) return;
+                if (on) {
+                    loadScreen.hidden = false;
+                    /* hidden हटने के बाद अगले frame पर class — वरना transition skip हो जाती है */
+                    requestAnimationFrame(function () { loadScreen.classList.add('show'); });
+                } else {
+                    loadScreen.classList.remove('show');
+                    loadScreen.hidden = true;
+                }
+            }
 
             function mark(v, bad) {
                 var f = form.querySelector('.field[data-v="' + v + '"]');
@@ -5686,9 +5781,10 @@
                 e.preventDefault();
                 if (submitting || !validateStep(2)) return;
                 submitting = true;
-                var btn = form.querySelector('.btn-submit');
-                var btnText = btn.textContent;
+                var btn = submitBtn || form.querySelector('.btn-submit');
+                var btnText = submitBtnText || btn.textContent;
                 btn.disabled = true; btn.textContent = 'Reserving your seat…';
+                showLoading(true);
                 fillHidden(form);
 
                 var data = Object.fromEntries(new FormData(form).entries());
@@ -5709,9 +5805,20 @@
                     setTimeout(leave, LEAVE_DELAY);
                 } else {
                     submitting = false;
+                    showLoading(false);
                     btn.disabled = false; btn.textContent = btnText;
                     showFormError('Could not submit. Please try again or reach us on WhatsApp.');
                 }
+            });
+
+            /* thankyou page से back आने पर page अक्सर bfcache से restore होता है —
+               तब overlay खुला और button disabled रह जाता, form बेकार हो जाता.
+               इसलिए restore होते ही सब reset. */
+            window.addEventListener('pageshow', function (e) {
+                if (!e.persisted) return;
+                submitting = false;
+                showLoading(false);
+                if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = submitBtnText; }
             });
         })();
     </script>
