@@ -134,12 +134,12 @@
         }
 
         .sec {
-            padding: 64px 0
+            padding: 34px 0
         }
 
         @media(min-width:900px) {
             .sec {
-                padding: 84px 0
+                padding: 44px 0
             }
         }
 
@@ -434,6 +434,22 @@
             font-weight: 600
         }
 
+        .hero-punch {
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-left: 3px solid var(--green);
+            border-radius: 0 5px 5px 0;
+            background: linear-gradient(90deg, rgba(37, 211, 102, .14), rgba(37, 211, 102, .02));
+            font-size: clamp(14.5px, 1.75vw, 17px);
+            font-weight: 700;
+            line-height: 1.5;
+            color: #fff
+        }
+
+        .hero-punch .gr {
+            color: var(--green)
+        }
+
         .trustrow {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -566,6 +582,7 @@
 
         .promo-photo {
             position: absolute;
+            height: auto;
             right: -2%;
             top: 4px;
             width: 42%;
@@ -1713,53 +1730,50 @@
             position: relative;
             color: #fff;
             display: grid;
-            gap: 18px;
-            align-content: stretch;
-            grid-template-rows: 1fr auto;
-            height: 100%
+            gap: 22px;
+            align-content: start
         }
 
         @media(min-width:620px) {
             .mentor {
-                grid-template-columns: .92fr 1.08fr;
-                align-items: center;
-                gap: 12px
+                grid-template-columns: 1.06fr .94fr;
+                column-gap: clamp(18px, 2.6vw, 34px);
+                align-items: center
             }
         }
 
+        /* ---- portrait column ---- */
         .mentor-photo {
             position: relative;
             display: grid;
-            place-items: center;
-            min-height: 240px;
-            align-self: stretch
+            justify-items: center;
+            align-content: center;
+            align-self: center
         }
 
-        /* glowing ring behind the portrait */
-        .mentor-photo:before {
-            content: "";
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 88%;
-            aspect-ratio: 1;
-            border-radius: 50%;
-            background: radial-gradient(circle at 50% 55%, rgba(37, 211, 102, .3), rgba(37, 211, 102, .05) 58%, transparent 70%);
-            border: 2px solid rgba(37, 211, 102, .35)
-        }
-
+        /* concentric rings sitting behind the head, offset for asymmetry */
+        .mentor-photo:before,
         .mentor-photo:after {
             content: "";
             position: absolute;
             left: 50%;
-            top: 50%;
+            top: 42%;
             transform: translate(-50%, -50%);
-            width: 104%;
             aspect-ratio: 1;
             border-radius: 50%;
-            border: 1px dashed rgba(37, 211, 102, .22);
-            animation: mentor-spin 34s linear infinite
+            pointer-events: none
+        }
+
+        .mentor-photo:before {
+            width: min(360px, 76%);
+            border: 1.5px solid rgba(37, 211, 102, .38);
+            background: radial-gradient(circle at 50% 50%, rgba(37, 211, 102, .17), rgba(37, 211, 102, .04) 60%, transparent 72%)
+        }
+
+        .mentor-photo:after {
+            width: min(430px, 94%);
+            border: 1px dashed rgba(37, 211, 102, .2);
+            animation: mentor-spin 40s linear infinite
         }
 
         @keyframes mentor-spin {
@@ -1772,22 +1786,25 @@
             position: relative;
             z-index: 2;
             width: 100%;
-            filter: drop-shadow(0 22px 34px rgba(0, 0, 0, .55))
+            height: auto;
+            /* max-width: 380px; */
+            object-fit: contain;
+            filter: drop-shadow(0 26px 38px rgba(0, 0, 0, .6))
         }
 
-        .mentor-body {
-            position: relative;
-            z-index: 2
-        }
-
+        /* badge tucked under the portrait */
         .mentor .kicker {
+            position: relative;
+            z-index: 3;
+            margin-top: -20px;
             display: inline-flex;
             align-items: center;
             gap: 9px;
-            padding: 8px 16px;
+            padding: 9px 18px;
             border-radius: 999px;
-            border: 1px solid rgba(37, 211, 102, .38);
-            background: rgba(37, 211, 102, .08);
+            border: 1px solid rgba(37, 211, 102, .45);
+            background: linear-gradient(180deg, rgba(11, 36, 27, .96), rgba(8, 22, 17, .96));
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07), 0 14px 26px -18px rgba(0, 0, 0, .9);
             font-size: 12.5px;
             letter-spacing: .1em;
             text-transform: uppercase;
@@ -1801,75 +1818,96 @@
         }
 
         .mentor .kicker b {
-            color: var(--green)
+            color: #fff
+        }
+
+        /* ---- name + signature column ---- */
+        .mentor-body {
+            position: relative;
+            z-index: 2
         }
 
         .mentor h3 {
-            font-size: clamp(24px, 3.6vw, 40px);
-            margin: 14px 0 16px;
-            line-height: 1.12
-        }
-
-        .mentor h3 span {
-            color: var(--green);
-            display: block
+            margin: 0;
+            font-size: clamp(23px, 2.5vw, 34px);
+            line-height: 1.04;
+            text-wrap: balance;
+            letter-spacing: -.02em;
+            color: var(--green)
         }
 
         .mentor-role {
-            margin: -8px 0 16px;
-            font-size: clamp(13px, 1.4vw, 15px);
-            font-weight: 600;
-            color: #9dbdb0
+            margin: 14px 0 0;
+            font-size: clamp(12.5px, 1.35vw, 15px);
+            font-weight: 700;
+            line-height: 1.5;
+            color: #e7f3ee
         }
 
         .mentor-role b {
             color: var(--green)
         }
 
-        .mentor ul {
-            list-style: none;
-            display: grid;
-            gap: 11px
-        }
-
-        .mentor li {
-            display: flex;
-            gap: 11px;
-            align-items: flex-start;
-            font-size: clamp(14px, 1.5vw, 16px);
-            color: #e2ede9
-        }
-
-        .mentor li i {
-            color: var(--green);
-            font-size: 19px;
-            flex: 0 0 auto;
-            line-height: 1.4
-        }
-
         .mentor-sign {
-            margin-top: 18px
+            margin-top: clamp(18px, 3.2vw, 34px);
+            display: grid;
+            justify-items: center
         }
 
         .sign {
-            max-width: 160px;
-            opacity: .95;
-            filter: brightness(0) invert(1) opacity(.9)
+            width: min(300px, 88%);
+            opacity: .96;
+            filter: brightness(0) invert(1)
         }
 
-        .sign-name {
-            margin-top: 4px;
-            font-size: clamp(15px, 1.7vw, 19px);
-            font-weight: 800;
-            color: var(--green)
+        /* ---- credentials, full width under both columns ---- */
+        .mentor-list {
+            grid-column: 1/-1;
+            list-style: none;
+            display: grid;
+            gap: clamp(12px, 1.7vw, 18px);
+            margin-top: clamp(4px, 1.4vw, 12px)
         }
 
-        .sign-role {
-            font-size: 11.5px;
-            letter-spacing: .1em;
-            text-transform: uppercase;
-            color: #86a99a;
-            font-weight: 600
+        .mentor-list li {
+            display: flex;
+            gap: 13px;
+            align-items: center;
+            font-size: clamp(14px, 1.5vw, 16.5px);
+            font-weight: 700;
+            line-height: 1.4;
+            color: #eef7f3;
+            opacity: 0;
+            transform: translateY(8px);
+            animation: mentor-cred .5s cubic-bezier(.16, 1, .3, 1) forwards;
+            animation-delay: calc(var(--i, 0) * 90ms + 120ms)
+        }
+
+        .mentor-list li i {
+            color: var(--green);
+            font-size: 21px;
+            line-height: 1;
+            flex: 0 0 auto
+        }
+
+        @keyframes mentor-cred {
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            .mentor-photo:after {
+                animation: none
+            }
+
+            .mentor-list li {
+                opacity: 1;
+                transform: none;
+                animation: none
+            }
         }
 
         /* stats strip under the mentor */
@@ -1885,7 +1923,9 @@
             background: rgba(255, 255, 255, .03)
         }
 
-        @media(min-width:760px) {
+        /* 4-up only when the mentor column is actually wide enough */
+        @media(min-width:760px) and (max-width:979px),
+        (min-width:1180px) {
             .mentor-stats {
                 grid-template-columns: repeat(4, 1fr)
             }
@@ -2109,11 +2149,215 @@
             display: block
         }
 
-        .btn-submit {
-            margin-top: 4px;
+        /* verified state — confirms the value passed validation */
+        .field.ok input {
+            border-color: rgba(15, 157, 88, .55);
+            background: #f7fcf9
+        }
+
+        .field.ok:after {
+            content: "";
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            width: 6px;
+            height: 11px;
+            margin-top: -8px;
+            border: solid var(--green-deep);
+            border-width: 0 2.2px 2.2px 0;
+            transform: rotate(42deg);
+            pointer-events: none
+        }
+
+        /* ---- two-step form ---- */
+        .stepbar {
+            display: grid;
+            gap: 8px;
+            margin: 2px 0 4px
+        }
+
+        .stepbar-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 12.5px
+        }
+
+        .stepbar-top b {
+            font-weight: 800;
+            color: var(--green-deep);
+            letter-spacing: .04em;
+            text-transform: uppercase
+        }
+
+        .stepbar-top span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--ink-soft);
+            font-weight: 600
+        }
+
+        .stepbar-top i {
+            color: var(--green-deep);
+            font-size: 15px
+        }
+
+        .stepbar-rail {
+            height: 5px;
+            border-radius: 5px;
+            background: #e7efeb;
+            overflow: hidden
+        }
+
+        .stepbar-rail span {
+            display: block;
+            height: 100%;
+            width: 50%;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #2ee06f, #0f9d58);
+            transition: width .35s cubic-bezier(.16, 1, .3, 1)
+        }
+
+        .fstep {
+            display: none;
+            gap: 12px
+        }
+
+        .fstep.is-on {
+            display: grid;
+            animation: step-in .32s cubic-bezier(.16, 1, .3, 1)
+        }
+
+        @keyframes step-in {
+            from {
+                opacity: 0;
+                transform: translateX(10px)
+            }
+        }
+
+        .field-q label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.35
+        }
+
+        .field-q .selwrap {
+            position: relative
+        }
+
+        .field-q .selwrap i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--green-deep);
+            font-size: 19px;
+            pointer-events: none
+        }
+
+        .field-q .selwrap .caret {
+            left: auto;
+            right: 15px;
+            font-size: 16px;
+            color: #8e9c97
+        }
+
+        .field-q .selwrap:focus-within .caret {
+            transform: translateY(-50%) rotate(180deg);
+            color: var(--green-deep)
+        }
+
+        .checkline {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 14px;
+            border: 1.5px solid #e4ece8;
+            border-radius: 8px;
+            background: #fff;
+            font-size: 12.5px;
+            line-height: 1.45;
+            color: var(--ink-soft);
+            cursor: pointer;
+            transition: border-color .18s ease
+        }
+
+        .checkline:hover {
+            border-color: #cfe8db
+        }
+
+        .checkline input {
+            width: 18px;
+            height: 18px;
+            flex: 0 0 auto;
+            margin-top: 1px;
+            accent-color: var(--green-deep);
+            cursor: pointer
+        }
+
+        .field-check.invalid .checkline {
+            border-color: var(--red);
+            background: #fff6f6
+        }
+
+        .steprow {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 10px;
+            margin-top: 4px
+        }
+
+        .btn-back {
+            background: #f2f6f4;
+            color: var(--ink);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 18px 20px
+        }
+
+        .btn-back:hover {
+            background: #e9f1ed
+        }
+
+        .btn-next {
             border-radius: 8px;
             padding: 18px 22px
         }
+
+        .btn-submit {
+            border-radius: 8px;
+            padding: 18px 18px;
+            font-size: clamp(14px, 1.6vw, 16.5px)
+        }
+
+        .formnote {
+            display: none;
+            margin-top: 10px;
+            padding: 11px 13px;
+            border-radius: 8px;
+            background: #fff5f5;
+            border: 1px solid #f6cdcd;
+            color: var(--red);
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center
+        }
+
+        .formnote.show {
+            display: block
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            .fstep.is-on {
+                animation: none
+            }
+        }
+
 
         .btn-submit:disabled {
             opacity: .8;
@@ -2264,6 +2508,7 @@
             position: relative;
             z-index: 2;
             width: 100%;
+            height: auto;
             filter: drop-shadow(0 20px 30px rgba(0, 0, 0, .5))
         }
 
@@ -3405,21 +3650,28 @@
                         class="gr">Problems</span> यही हैं:</p>
 
                 <ul class="pains">
-                    <li class="pain"><span class="pin"><i class="ph-bold ph-x-circle"></i></span><span>ज्यादा लोगों के
-                            message भेजते ही WhatsApp <b class="bad">restrict</b> या <b class="bad">ban</b> हो जाता
+                    <li class="pain"><span class="pin"><i class="ph-bold ph-x-circle"></i></span><span>ज्यादा लोगों को
+                            message भेजो तो WhatsApp <b class="bad">restrict</b> या <b class="bad">ban</b> हो जाता
                             है</span></li>
                     <li class="pain"><span class="pin"><i class="ph-bold ph-broadcast"></i></span><span>Broadcast और
                             follow-up properly <b class="bad">manage</b> नहीं हो पाते</span></li>
                     <li class="pain"><span class="pin"><i class="ph-bold ph-file-text"></i></span><span>Template
                             approval में <b class="bad">problem</b> आती है</span></li>
+                    <li class="pain"><span class="pin"><i class="ph-bold ph-lightning-slash"></i></span><span>Facebook
+                            Ads, Instagram Ads, IndiaMART, TradeIndia, Shopify और WooCommerce से आने वाली <b
+                                class="ok">Leads</b> <b class="bad">Late Reply</b> की वजह से <b
+                                class="bad">Lost</b> हो जाती हैं</span></li>
                     <li class="pain"><span class="pin"><i class="ph-bold ph-chat-circle-dots"></i></span><span><b
                                 class="ok">Leads</b> और customer chats <b class="bad">बिखर</b> जाती हैं</span></li>
                     <li class="pain"><span class="pin"><i class="ph-bold ph-users-three"></i></span><span>Team के लिए एक
                             proper WhatsApp <b class="bad">management system</b> नहीं मिलता</span></li>
-                    <li class="pain"><span class="pin"><i class="ph-bold ph-shield-warning"></i></span><span>WhatsApp
-                            Marketing के लिए एक <b class="bad">complete, safe और scalable</b> solution नहीं है</span>
-                    </li>
+                    <li class="pain"><span class="pin"><i class="ph-bold ph-shield-warning"></i></span><span>और
+                            WhatsApp Marketing के लिए एक <b class="bad">complete, reliable tool</b> ढूंढना मुश्किल हो
+                            जाता है</span></li>
                 </ul>
+
+                <p class="hero-punch">अगर आपका Business <span class="gr">WhatsApp</span> पर Depend करता है, तो आपको
+                    सिर्फ WhatsApp नहीं — एक <span class="gr">Proper System</span> चाहिए।</p>
 
                 <div class="trustrow">
                     <span><i class="ph-bold ph-shield-check"></i> 100% Safe<br />&amp; Compliant</span>
@@ -3441,7 +3693,7 @@
                             Happy Customers!</span></p>
 
                     <img class="promo-photo" src="Images/profile.webp"
-                        alt="Dipanshu Vijay (DV Sir) — WhatsApp Automation Expert" width="520" height="480"
+                        alt="Dipanshu Vijay (DV Sir) — WhatsApp Automation Expert" width="1024" height="926"
                         fetchpriority="high" />
 
                     animated automation hub
@@ -3508,18 +3760,16 @@
                 <img src="./Images/hero.avif" style="border-radius: 5px;" alt="">
 
                 <div class="solve-card">
-                    <h3>इन सभी <span class="warn">Problems</span> का <span class="gr">Solution</span> सीखिए<br />हमारी
-                        <span class="gr">FREE MASTERCLASS</span> में
-                    </h3>
+                    <h3>जानिए कैसे <span class="gr">WhatsApp</span> को Marketing, Lead Management, Automation,
+                        Follow-up, Customer Support और Team Handling के लिए एक <span class="gr">complete business
+                            system</span> की तरह use किया जा सकता है।</h3>
                     <a class="btn btn-primary btn-block" href="#register" data-cta="hero"><i
-                            class="ph-bold ph-calendar-check"></i> <span>YES! मुझे Free Masterclass में Register करना
-                            है</span> <span class="wa-badge"><svg viewBox="0 0 24 24">
-                                <use href="#wa-glyph" />
-                            </svg></span></a>
+                            class="ph-bold ph-calendar-check"></i> <span>Reserve My FREE Seat</span> <span
+                            class="wa-badge"><i class="ph-bold ph-arrow-right"></i></span></a>
                     <div class="microtrust on-dark">
                         <span><i class="ph-bold ph-graduation-cap"></i> Free Masterclass</span>
-                        <span><i class="ph-bold ph-broadcast"></i> Live Training</span>
-                        <span><i class="ph-bold ph-users-three"></i> Limited Seats</span>
+                        <span><i class="ph-bold ph-code"></i> No Coding Required</span>
+                        <span><i class="ph-bold ph-users-three"></i> Business Owners Focused</span>
                     </div>
                 </div>
             </div>
@@ -3886,7 +4136,7 @@
             <div class="mx rv">
                 <div class="mx-photo">
                     <img src="Images/me.webp" alt="Dipanshu Vijay — Business Automation Expert" loading="lazy"
-                        width="520" height="480" />
+                        width="1340" height="1504" />
                 </div>
 
                 <div class="mx-body">
@@ -3939,26 +4189,37 @@
             <div class="mr rv">
                 <!-- mentor -->
                 <div class="mentor">
-                    <div class="mentor-photo"><img src="Images/profile.webp" alt="Dipanshu Vijay (DV Sir)"
-                            loading="lazy" width="520" height="480" /></div>
-                    <div class="mentor-body">
+                    <div class="mentor-photo">
+                        <img src="Images/profile.avif" alt="Dipanshu Vijay (DV Sir)" loading="lazy" width="1024"
+                            height="926" />
                         <span class="kicker"><i class="ph-bold ph-user-circle"></i> आपके <b>Mentor</b></span>
-                        <h3>DV Sir – <span>Dipanshu Vijay</span></h3>
-                        <p class="mentor-role">Business Automation Expert · Trusted by <b>1,20,000+</b> Business Owners
-                        </p>
-                        <ul>
-                            <li><i class="ph-bold ph-check-circle"></i><span>CA, CMA &amp; Author</span></li>
-                            <li><i class="ph-bold ph-check-circle"></i><span>TEDx Speaker &amp; Guinness World Record
-                                    Holder</span></li>
-                            <li><i class="ph-bold ph-check-circle"></i><span>16+ Years in Business Process
-                                    Automation</span></li>
-                            <li><i class="ph-bold ph-check-circle"></i><span>Sales Systems, Lead Management &amp;
-                                    Business Growth</span></li>
-                        </ul>
+                    </div>
+                    <div class="mentor-body">
+                        <h3>Dipanshu Vijay</h3>
+                        <p class="mentor-role">Business Automation Expert · Trusted by
+                            <b>1,20,000+</b> Business Owners</p>
                         <div class="mentor-sign">
                             <img class="sign" src="Images/sign.webp" alt="Dipanshu Vijay signature" loading="lazy" />
                         </div>
                     </div>
+
+                         
+
+                    <ul class="mentor-list">
+                        <li style="--i:0"><i class="ph-bold ph-check-circle"></i><span>CA, CMA &amp; Author</span></li>
+                        <li style="--i:1"><i class="ph-bold ph-check-circle"></i><span>TEDx Speaker &amp; Guinness World
+                                Record Holder</span></li>
+                        <li style="--i:2"><i class="ph-bold ph-check-circle"></i><span>16+ Years in Business Process
+                                Automation</span></li>
+                        <li style="--i:3"><i class="ph-bold ph-check-circle"></i><span>Sales Systems, Lead Management
+                                &amp; Business Growth</span></li>
+                        <li style="--i:3"><i class="ph-bold ph-check-circle"></i><span>More than 1,20,000 business owners across 55+ cities and 45+ industries.</span></li>
+                    </ul>
+                   <!-- <div style="display: block;">
+                       
+                       <p class="hero-punch" style="display: block;" >अगर आपका Business <span class="gr">WhatsApp</span> पर Depend करता है, तो आपको
+                        सिर्फ WhatsApp नहीं — एक <span class="gr">Proper System</span> चाहिए।</p>
+                    </div> -->
 
                     <div class="mentor-stats">
                         <div class="mstat"><i class="ph-bold ph-clock-countdown"></i>
@@ -3982,96 +4243,198 @@
                     <h3>Register करें और अपनी Seat <span class="gr">पक्की करें</span></h3>
                     <p class="note">यह Masterclass पूरी तरह FREE है<br /><em>लेकिन Seats Limited हैं!</em></p>
 
+                      
+
                     <form id="regForm" novalidate>
-                        <p class="form-title"><span><svg viewBox="0 0 24 24" aria-hidden="true">
-                                    <use href="#wa-glyph" />
-                                </svg> Automate &amp; Scale with WhatsApp Masterclass</span></p>
-                        <div class="row2">
-                            <div class="field" data-v="fname">
-                                <i class="ph-bold ph-user"></i>
-                                <input type="text" name="first_name" placeholder="First Name"
-                                    autocomplete="given-name" />
-                                <span class="err">First name ज़रूरी है</span>
+                       
+
+                        <div class="stepbar">
+                            <div class="stepbar-top">
+                                <b id="stepLabel">Step 1 of 2</b>
+                                <span><i class="ph-bold ph-timer"></i> Takes less than 45 seconds</span>
                             </div>
-                            <div class="field" data-v="lname">
+                            <div class="stepbar-rail"><span id="stepFill"></span></div>
+                        </div>
+
+                        <!-- ===== step 1: contact ===== -->
+                        <div class="fstep is-on" data-step="1">
+                            <div class="field" data-v="fullname">
                                 <i class="ph-bold ph-user"></i>
-                                <input type="text" name="last_name" placeholder="Last Name"
-                                    autocomplete="family-name" />
-                                <span class="err">Last name ज़रूरी है</span>
+                                <input type="text" name="full_name" placeholder="Full Name" autocomplete="name"
+                                    maxlength="60" />
+                                <span class="err">पूरा नाम डालें (कम से कम 3 अक्षर, numbers की अनुमति नहीं)</span>
                             </div>
+                            <div class="field" data-v="phone">
+                                <i class="ph-bold ph-whatsapp-logo"></i>
+                                <input type="tel" name="whatsapp_number" placeholder="WhatsApp Number"
+                                    inputmode="numeric" autocomplete="tel" maxlength="10" />
+                                <span class="err">10 अंकों का number डालें जो 6-9 से शुरू होता हो</span>
+                            </div>
+                            <div class="field" data-v="email">
+                                <i class="ph-bold ph-envelope-simple"></i>
+                                <input type="email" name="email" placeholder="Email Id" autocomplete="email"
+                                    maxlength="80" />
+                                <span class="err">valid email address डालें (जैसे name@company.com)</span>
+                            </div>
+                            <div class="field" data-v="industry">
+                                <i class="ph-bold ph-briefcase"></i>
+                                <select name="business_industry">
+                                    <option value="">Business Industry</option>
+                                    <option>Insurance / Mutual Funds / Investments</option>
+                                    <option>Real Estate Builder/Developer</option>
+                                    <option>Real Estate Consultant</option>
+                                    <option>Trainer/Coach/Consultants</option>
+                                    <option>Education Institute</option>
+                                    <option>Loans / DSA / Financial Services</option>
+                                    <option>Fitness / Wellness</option>
+                                    <option>Manufacturing</option>
+                                    <option>Wholesale / Trading / Distribution</option>
+                                    <option>Retail / Showroom</option>
+                                    <option>Healthcare / Clinic / Hospital</option>
+                                    <option>Digital Marketing Agency</option>
+                                    <option>IT / SAAS Business</option>
+                                    <option>Recruitment / HR Agency</option>
+                                    <option>Tour &amp; Travel</option>
+                                    <option>Hospitality / Events</option>
+                                    <option>E-commerce / D2C Brand</option>
+                                    <option>Export / Import</option>
+                                    <option>Other</option>
+                                </select>
+                                <i class="ph-bold ph-caret-down caret"></i>
+                                <span class="err">कृपया अपनी industry चुनें</span>
+                            </div>
+
+                            <button class="btn btn-primary btn-block btn-next" type="button" data-next>Continue <i
+                                    class="ph-bold ph-arrow-right"></i></button>
                         </div>
-                        <div class="field" data-v="phone">
-                            <i class="ph-bold ph-whatsapp-logo"></i>
-                            <input type="tel" name="mobile" placeholder="Phone Number" inputmode="numeric"
-                                autocomplete="tel" />
-                            <span class="err">10 अंकों का valid WhatsApp number डालें</span>
-                        </div>
-                        <div class="field" data-v="email">
-                            <i class="ph-bold ph-envelope-simple"></i>
-                            <input type="email" name="email" placeholder="Email Address" autocomplete="email" />
-                            <span class="err">valid email address डालें</span>
-                        </div>
-                        <div class="field" data-v="industry">
-                            <i class="ph-bold ph-briefcase"></i>
-                            <select name="industry" required>
-                                <option value="">Select Your Business Industry</option>
-                                <option>Manufacturing/Trading</option>
-                                <option>Health and Fitness</option>
-                                <option>Trainer, Coach, or Consultant</option>
-                                <option>Real Estate</option>
-                                <option>Recruitment</option>
-                                <option>Finance or Loan Services</option>
-                                <option>Agencies and Service Providers</option>
-                                <option>Event Management &amp; Wedding Planning</option>
-                                <option>Insurance and Investments</option>
-                                <option>Automobile and Car Dealerships</option>
-                                <option>Healthcare, Hospitals, and Clinics</option>
-                                <option>Digital Marketing</option>
-                                <option>Other</option>
-                            </select>
-                            <i class="ph-bold ph-caret-down caret"></i>
-                            <span class="err">कृपया industry चुनें</span>
-                        </div>
-                        <div class="field" data-v="api">
-                            <i class="ph-bold ph-plugs-connected"></i>
-                            <select name="using_api" required>
-                                <option value="">Are you using Official WhatsApp API?</option>
-                                <option>Yes</option>
-                                <option>No</option>
-                                <option>Not Sure</option>
-                            </select>
-                            <i class="ph-bold ph-caret-down caret"></i>
-                            <span class="err">कृपया एक option चुनें</span>
-                        </div>
-                        <div class="field" data-v="team">
-                            <i class="ph-bold ph-users-three"></i>
-                            <select name="team_size" required>
-                                <option value="">How many employees do you have?</option>
-                                <option>Just me</option>
-                                <option>2-10</option>
-                                <option>11-50</option>
-                                <option>50+</option>
-                            </select>
-                            <i class="ph-bold ph-caret-down caret"></i>
-                            <span class="err">कृपया एक option चुनें</span>
+
+                        <!-- ===== step 2: qualification ===== -->
+                        <div class="fstep" data-step="2">
+                            <div class="field field-q" data-v="turnover">
+                                <label for="q_turnover">What is your approximate annual business turnover?</label>
+                                <div class="selwrap">
+                                    <i class="ph-bold ph-chart-line-up"></i>
+                                    <select id="q_turnover" name="annual_turnover">
+                                        <option value="">Select an option</option>
+                                        <option>Just Started or Pre Revenue Stage</option>
+                                        <option>Below &#8377;25 lakh</option>
+                                        <option>&#8377;25&ndash;50 lakh</option>
+                                        <option>&#8377;50 lakh&ndash;&#8377;1 crore</option>
+                                        <option>&#8377;1&ndash;5 crore</option>
+                                        <option>&#8377;5&ndash;25 crore</option>
+                                        <option>More than &#8377;25 crore</option>
+                                        <option>Prefer not to disclose</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down caret"></i>
+                                </div>
+                                <span class="err">कृपया एक option चुनें</span>
+                            </div>
+
+                            <div class="field field-q" data-v="current_tool">
+                                <label for="q_tool">What are you currently using for business communication on
+                                    WhatsApp?</label>
+                                <div class="selwrap">
+                                    <i class="ph-bold ph-plugs-connected"></i>
+                                    <select id="q_tool" name="current_setup">
+                                        <option value="">Select an option</option>
+                                        <option>Normal WhatsApp</option>
+                                        <option>WhatsApp Business App</option>
+                                        <option>Unofficial sender/extension</option>
+                                        <option>Official API through another provider</option>
+                                        <option>Official API, but not using it effectively</option>
+                                        <option>Not sure</option>
+                                        <option>Already using WA SIMPLE</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down caret"></i>
+                                </div>
+                                <span class="err">कृपया एक option चुनें</span>
+                            </div>
+
+                            <div class="field field-q" data-v="priority">
+                                <label for="q_priority">What is your biggest WhatsApp priority right now?</label>
+                                <div class="selwrap">
+                                    <i class="ph-bold ph-target"></i>
+                                    <select id="q_priority" name="biggest_priority">
+                                        <option value="">Select an option</option>
+                                        <option>Convert more leads</option>
+                                        <option>Send bulk campaigns safely</option>
+                                        <option>Qualify leads with an AI chatbot</option>
+                                        <option>Automate follow-ups</option>
+                                        <option>Manage team conversations in one inbox/CRM</option>
+                                        <option>Integrate Facebook Ads, website, IndiaMART leads / CRM</option>
+                                        <option>Just exploring</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down caret"></i>
+                                </div>
+                                <span class="err">कृपया एक option चुनें</span>
+                            </div>
+
+                            <div class="field field-q" data-v="volume">
+                                <label for="q_volume">Approx how many leads or customers do you message / follow up
+                                    every month?</label>
+                                <div class="selwrap">
+                                    <i class="ph-bold ph-users-three"></i>
+                                    <select id="q_volume" name="monthly_volume">
+                                        <option value="">Select an option</option>
+                                        <option>Fewer than 500</option>
+                                        <option>500&ndash;2,000</option>
+                                        <option>2,001&ndash;5,000</option>
+                                        <option>5,001&ndash;15,000</option>
+                                        <option>More than 15,000</option>
+                                        <option>I am not sure</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down caret"></i>
+                                </div>
+                                <span class="err">कृपया एक option चुनें</span>
+                            </div>
+
+                            <div class="field field-q" data-v="timeline">
+                                <label for="q_timeline">If the solution is suitable, when would you like to implement
+                                    WhatsApp automation?</label>
+                                <div class="selwrap">
+                                    <i class="ph-bold ph-calendar-check"></i>
+                                    <select id="q_timeline" name="implementation_timeline">
+                                        <option value="">Select an option</option>
+                                        <option>Immediately / Within 7 days</option>
+                                        <option>Within 30 days</option>
+                                        <option>Within 1&ndash;3 months</option>
+                                        <option>After 3 months</option>
+                                        <option>I am only exploring right now</option>
+                                    </select>
+                                    <i class="ph-bold ph-caret-down caret"></i>
+                                </div>
+                                <span class="err">कृपया एक option चुनें</span>
+                            </div>
+
+                            <div class="field field-check" data-v="consent">
+                                <label class="checkline"><input type="checkbox" name="consent" value="yes" /><span>I
+                                        agree to receive masterclass reminders and relevant WhatsApp communication from
+                                        WA SIMPLE. I can opt out anytime.</span></label>
+                                <span class="err">आगे बढ़ने के लिए consent देना ज़रूरी है</span>
+                            </div>
+
+                            <div class="steprow">
+                                <button class="btn btn-ghost btn-back" type="button" data-back><i
+                                        class="ph-bold ph-arrow-left"></i> Back</button>
+                                <button class="btn btn-primary btn-submit" type="submit">Confirm My Free Masterclass
+                                    Seat Now</button>
+                            </div>
                         </div>
 
                         <!-- tracking (auto-filled) -->
                         <input type="hidden" name="utm_source" /><input type="hidden" name="utm_medium" />
-                        <input type="hidden" name="utm_campaign" /><input type="hidden" name="utm_term" />
-                        <input type="hidden" name="utm_content" /><input type="hidden" name="gclid" />
-                        <input type="hidden" name="fbclid" /><input type="hidden" name="landing_page_url" />
-                        <input type="hidden" name="first_page_url" /><input type="hidden" name="current_page_url" />
-                        <input type="hidden" name="referrer" /><input type="hidden" name="device" />
-                        <input type="hidden" name="browser" /><input type="hidden" name="os" />
-                        <input type="hidden" name="timestamp" />
+                        <input type="hidden" name="utm_campaign" /><input type="hidden" name="utm_campaign_id" />
+                        <input type="hidden" name="utm_adset" /><input type="hidden" name="utm_adset_id" />
+                        <input type="hidden" name="utm_ad" /><input type="hidden" name="utm_ad_id" />
+                        <input type="hidden" name="utm_content" /><input type="hidden" name="utm_term" />
+                        <input type="hidden" name="utm_placement" /><input type="hidden" name="device_platform" />
+                        <input type="hidden" name="gclid" /><input type="hidden" name="fbclid" />
+                        <input type="hidden" name="landing_page_url" /><input type="hidden" name="first_page_url" />
+                        <input type="hidden" name="current_page_url" /><input type="hidden" name="referrer" />
+                        <input type="hidden" name="device" /><input type="hidden" name="browser" />
+                        <input type="hidden" name="os" /><input type="hidden" name="timestamp" />
 
-                        <button class="btn btn-primary btn-block btn-submit" type="submit">YES! मुझे Free Masterclass
-                            में Register करना है <span class="wa-badge"><svg viewBox="0 0 24 24" aria-hidden="true">
-                                    <use href="#wa-glyph" />
-                                </svg></span></button>
-                        <p class="consent"><i class="ph-bold ph-shield-check"></i> Register करने पर आपको masterclass की
-                            details WhatsApp पर मिलेंगी।</p>
+                        <p class="formnote" id="formError" role="alert"></p>
                     </form>
 
                     <div class="success" id="success">
@@ -4101,7 +4464,7 @@
         <div class="wrap">
             <div class="sec-head head-center rv">
                 <span class="eyebrow eyebrow-light"><i class="ph-bold ph-shield-check"></i> Trusted &amp; Loved</span>
-                <h2 class="sec-title">Trusted by <span class="gr">1000+</span> Business Owners</h2>
+                <h2 class="sec-title">Trusted by <span class="gr">120K+</span> Business Owners</h2>
                 <p class="sec-sub">देशभर के <span class="gr">Business Owners</span> का <b>भरोसा</b>, हमारी सबसे बड़ी
                     ताकत!</p>
                 <div class="title-flourish" aria-hidden="true"></div>
@@ -4182,7 +4545,7 @@
                     </div>
                     <div class="stat">
                         <span class="ico-round"><i class="ph-bold ph-buildings"></i></span>
-                        <div><span class="v" data-to="20" data-suffix="+">0</span><b>Industries Served</b></div>
+                        <div><span class="v" data-to="45" data-suffix="+">0</span><b>Industries Served</b></div>
                     </div>
                     <div class="stat">
                         <span class="ico-round"><i class="ph-bold ph-graduation-cap"></i></span>
@@ -4356,7 +4719,10 @@
 
             /* ---- UTM / tracking capture ---- */
             var params = new URLSearchParams(location.search);
-            var utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'];
+            var utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_campaign_id',
+                'utm_adset', 'utm_adset_id', 'utm_ad', 'utm_ad_id',
+                'utm_content', 'utm_term', 'utm_placement', 'device_platform',
+                'gclid', 'fbclid'];
             var STORE = 'wa_mc_tracking', stored = {};
             try { stored = JSON.parse(sessionStorage.getItem(STORE) || localStorage.getItem(STORE) || '{}'); } catch (e) { }
             utmKeys.forEach(function (k) { var v = params.get(k); if (v) { stored[k] = v; } });
@@ -4385,51 +4751,191 @@
                 set('timestamp', new Date().toISOString());
             }
 
-            /* ---- registration form ---- */
+            /* ---- registration form (2 steps + validation + Google Sheet) ---- */
+
+            /* Paste the Apps Script Web App /exec URL here after deploying apps-script/Code.gs */
+            var SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxOVbacYXijPskAJhpwJ7_aZvP8Uh0EPxG26EF20QwndwebYFQCjk2HxPyFID0nuU1QoQ/exec';
+            var THANK_YOU_URL = 'thankyou.html';
+
             var form = document.getElementById('regForm');
             var success = document.getElementById('success');
-            var submitting = false;
+            var formError = document.getElementById('formError');
+            var stepLabel = document.getElementById('stepLabel');
+            var stepFill = document.getElementById('stepFill');
+            var steps = form.querySelectorAll('.fstep');
+            var submitting = false, currentStep = 1;
             fillHidden(form);
 
-            function mark(v, bad) { var f = form.querySelector('.field[data-v="' + v + '"]'); if (f) f.classList.toggle('invalid', bad); }
-            function validate() {
+            function mark(v, bad) {
+                var f = form.querySelector('.field[data-v="' + v + '"]');
+                if (f) f.classList.toggle('invalid', bad);
+                return !bad;
+            }
+            function firstInvalid() { return form.querySelector('.fstep.is-on .field.invalid'); }
+            function showFormError(msg) {
+                if (!formError) return;
+                formError.textContent = msg || '';
+                formError.classList.toggle('show', !!msg);
+            }
+
+            /* normalises 10-digit Indian mobiles: strips +91 / 0 / spaces / dashes */
+            function cleanPhone(raw) {
+                var d = String(raw || '').replace(/\D/g, '');
+                d = d.replace(/^0+/, '').replace(/^91(?=\d{10}$)/, '');
+                return d;
+            }
+
+            var rules = {
+                fullname: function () {
+                    var v = form.full_name.value.trim().replace(/\s+/g, ' ');
+                    form.full_name.value = v;
+                    return v.length >= 3 && /^[A-Za-zऀ-ॿ][A-Za-zऀ-ॿ .'-]*$/.test(v);
+                },
+                phone: function () {
+                    var d = cleanPhone(form.whatsapp_number.value);
+                    if (/^[6-9]\d{9}$/.test(d)) { form.whatsapp_number.value = d; return true; }
+                    return false;
+                },
+                email: function () {
+                    var v = form.email.value.trim().toLowerCase();
+                    form.email.value = v;
+                    if (v.length > 254 || v.indexOf('..') > -1) return false;
+                    var parts = v.split('@');
+                    if (parts.length !== 2) return false;
+                    var local = parts[0], domain = parts[1];
+                    if (!local || local.length > 64 || local.charAt(0) === '.' || local.slice(-1) === '.') return false;
+                    if (!/^[a-z0-9._%+-]+$/.test(local)) return false;
+                    /* domain: labels of letters/digits/hyphens, real TLD of 2+ letters */
+                    return /^(?=.{4,253}$)([a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$/.test(domain);
+                },
+                industry: function () { return !!form.business_industry.value; },
+                turnover: function () { return !!form.annual_turnover.value; },
+                current_tool: function () { return !!form.current_setup.value; },
+                priority: function () { return !!form.biggest_priority.value; },
+                volume: function () { return !!form.monthly_volume.value; },
+                timeline: function () { return !!form.implementation_timeline.value; },
+                consent: function () { return form.consent.checked; }
+            };
+            var stepFields = {
+                1: ['fullname', 'phone', 'email', 'industry'],
+                2: ['turnover', 'current_tool', 'priority', 'volume', 'timeline', 'consent']
+            };
+
+            function validateStep(n) {
                 var ok = true;
-                var fname = form.first_name.value.trim();
-                var lname = form.last_name.value.trim();
-                var phone = form.mobile.value.replace(/\D/g, '').replace(/^91(?=\d{10}$)/, '');
-                var email = form.email.value.trim();
-                mark('fname', !fname); if (!fname) ok = false;
-                mark('lname', !lname); if (!lname) ok = false;
-                var pbad = !/^[6-9]\d{9}$/.test(phone); mark('phone', pbad); if (pbad) ok = false;
-                var ebad = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); mark('email', ebad); if (ebad) ok = false;
-                var ibad = !form.industry.value; mark('industry', ibad); if (ibad) ok = false;
-                var abad = !form.using_api.value; mark('api', abad); if (abad) ok = false;
-                var tbad = !form.team_size.value; mark('team', tbad); if (tbad) ok = false;
+                stepFields[n].forEach(function (key) { if (!mark(key, !rules[key]())) ok = false; });
+                if (!ok) {
+                    showFormError('कुछ fields अधूरे हैं — नीचे highlight किए गए fields ठीक करें।');
+                    var bad = firstInvalid();
+                    if (bad) {
+                        var input = bad.querySelector('input,select');
+                        if (input) input.focus({ preventScroll: true });
+                        bad.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+                    }
+                } else { showFormError(''); }
                 return ok;
             }
-            form.querySelectorAll('input,select').forEach(function (el) {
-                el.addEventListener('input', function () { var f = el.closest('.field'); if (f) f.classList.remove('invalid'); });
-                el.addEventListener('change', function () { var f = el.closest('.field'); if (f) f.classList.remove('invalid'); });
+
+            function goToStep(n) {
+                currentStep = n;
+                steps.forEach(function (s) { s.classList.toggle('is-on', +s.getAttribute('data-step') === n); });
+                if (stepLabel) stepLabel.textContent = 'Step ' + n + ' of 2';
+                if (stepFill) stepFill.style.width = (n === 1 ? 50 : 100) + '%';
+                form.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' });
+            }
+
+            form.querySelectorAll('[data-next]').forEach(function (b) {
+                b.addEventListener('click', function () { if (validateStep(1)) goToStep(2); });
             });
+            form.querySelectorAll('[data-back]').forEach(function (b) {
+                b.addEventListener('click', function () { showFormError(''); goToStep(1); });
+            });
+
+            /* clear the error state as soon as the visitor edits the field */
+            form.querySelectorAll('input,select').forEach(function (el) {
+                function clear() { var f = el.closest('.field'); if (f) f.classList.remove('invalid', 'ok'); showFormError(''); }
+                el.addEventListener('input', clear);
+                el.addEventListener('change', clear);
+            });
+            /* strips characters a field must never contain, keeping the caret in place */
+            function filterInput(el, allowed) {
+                if (!el) return;
+                el.addEventListener('input', function () {
+                    var clean = el.value.replace(allowed, '');
+                    if (clean === el.value) return;
+                    var pos = (el.selectionStart || 0) - (el.value.length - clean.length);
+                    el.value = clean;
+                    try { el.setSelectionRange(pos, pos); } catch (err) { }
+                });
+            }
+            /* name: letters (Latin + Devanagari), spaces and . ' - — no digits */
+            filterInput(form.full_name, /[^A-Za-zऀ-ॿ\u200D .'-]/g);
+            /* phone: digits (and a leading +) only — no letters */
+            filterInput(form.whatsapp_number, /[^\d+]/g);
+
+            /* check name / phone / email the moment the visitor leaves the field */
+            var liveRules = { full_name: 'fullname', whatsapp_number: 'phone', email: 'email' };
+            Object.keys(liveRules).forEach(function (name) {
+                var el = form[name];
+                if (!el) return;
+                el.addEventListener('blur', function () {
+                    var f = el.closest('.field');
+                    if (!el.value.trim()) { if (f) f.classList.remove('ok', 'invalid'); return; }
+                    var good = rules[liveRules[name]]();
+                    mark(liveRules[name], !good);
+                    if (f) f.classList.toggle('ok', good);
+                });
+            });
+
+            function sendToSheet(data) {
+                if (!SHEET_ENDPOINT) { console.warn('SHEET_ENDPOINT is empty — lead not sent:', data); return Promise.resolve(); }
+                /* text/plain keeps it a simple request, so no CORS preflight against Apps Script */
+                return fetch(SHEET_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(data),
+                    keepalive: true /* the POST survives the redirect to the thank-you page */
+                }).then(function (r) { return r.json(); }).then(function (res) {
+                    if (!res || res.status !== 'ok') throw new Error((res && res.message) || 'Sheet rejected the lead');
+                });
+            }
 
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
-                if (submitting || !validate()) return;
+                if (submitting || !validateStep(2)) return;
                 submitting = true;
                 var btn = form.querySelector('.btn-submit');
+                var btnText = btn.textContent;
                 btn.disabled = true; btn.textContent = 'Seat reserve की जा रही है…';
                 fillHidden(form);
+
                 var data = Object.fromEntries(new FormData(form).entries());
+                data.consent = form.consent.checked ? 'yes' : 'no';
 
-                /* ---- Send lead — replace with your endpoint / Google Sheet / webhook ----
-                fetch('https://YOUR-ENDPOINT',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}); */
-                console.log('LEAD + TRACKING →', data);
+                try { sessionStorage.setItem('dv_lead', JSON.stringify(data)); } catch (err) { }
 
-                setTimeout(function () {
-                    form.classList.add('hidden');
-                    success.classList.add('show');
-                    success.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
-                }, 800);
+                /* the lead POST and the redirect run in parallel — keepalive lets the request
+                   finish after navigation, so a slow Sheets call never holds the visitor here */
+                var left = false;
+                function leave() {
+                    if (left) return;
+                    left = true;
+                    var first = String(data.full_name || '').trim().split(' ')[0];
+                    window.location.href = THANK_YOU_URL + (first ? '?n=' + encodeURIComponent(first) : '');
+                }
+                var failsafe = setTimeout(leave, 2500);
+
+                sendToSheet(data).then(function () {
+                    clearTimeout(failsafe);
+                    leave();
+                }).catch(function (err) {
+                    clearTimeout(failsafe);
+                    if (left) return; /* already on the thank-you page */
+                    console.error('Lead submit failed', err);
+                    submitting = false;
+                    btn.disabled = false; btn.textContent = btnText;
+                    showFormError('Submit नहीं हो पाया. कृपया दोबारा try करें या WhatsApp पर संपर्क करें।');
+                });
             });
         })();
     </script>

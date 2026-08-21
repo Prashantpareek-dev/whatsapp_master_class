@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Seat Confirmed | Automate &amp; Scale with WhatsApp Masterclass</title>
+    <meta name="description" content="आपकी FREE WhatsApp Automation Masterclass की seat reserve हो गई है." />
+    <meta name="robots" content="noindex, nofollow" />
+
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23111b21'/><path d='M50 20a30 30 0 0 0-25.8 45.2L20 80l15.2-4a30 30 0 1 0 14.8-56z' fill='%2325D366'/></svg>" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css" />
+
+    <style>
+        :root {
+            --bg: #f4f7f5;
+            --surface: #ffffff;
+            --ink: #0b141a;
+            --ink-soft: #556269;
+            --line: #e3eae6;
+            --dark: #0b1a17;
+            --dark-2: #102520;
+            --green: #25D366;
+            --green-deep: #0f9d58;
+            --radius: 5px;
+            --shadow-lg: 0 26px 70px -30px rgba(11, 20, 26, .45);
+            --font: 'Plus Jakarta Sans', 'Noto Sans Devanagari', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font-family: var(--font);
+            color: #fff;
+            background:
+                radial-gradient(80% 60% at 20% 0%, rgba(37, 211, 102, .16), transparent 60%),
+                linear-gradient(160deg, var(--dark-2), var(--dark) 70%);
+            min-height: 100dvh;
+            display: grid;
+            align-content: center;
+            padding: clamp(24px, 5vw, 64px) clamp(16px, 4vw, 32px)
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin: 0
+        }
+
+        .wrap {
+            width: 100%;
+            max-width: 940px;
+            margin: 0 auto
+        }
+
+        /* dotted texture, same language as the register card */
+        .ty {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(37, 211, 102, .18);
+            border-radius: 10px;
+            background:
+                radial-gradient(70% 60% at 18% 20%, rgba(37, 211, 102, .14), transparent 62%),
+                linear-gradient(160deg, #10241d, #08120f);
+            box-shadow: var(--shadow-lg);
+            padding: clamp(26px, 4.4vw, 52px)
+        }
+
+        .ty:before {
+            content: "";
+            position: absolute;
+            left: 18px;
+            top: 18px;
+            width: 150px;
+            height: 130px;
+            background-image: radial-gradient(rgba(37, 211, 102, .35) 1.4px, transparent 1.4px);
+            background-size: 15px 15px;
+            mask-image: linear-gradient(135deg, #000, transparent 70%);
+            pointer-events: none
+        }
+
+        .ty-head {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            justify-items: center;
+            text-align: center;
+            gap: 14px
+        }
+
+        .tick {
+            width: 74px;
+            height: 74px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: #06251a;
+            background: var(--green);
+            box-shadow: 0 0 0 10px rgba(37, 211, 102, .14), 0 0 0 22px rgba(37, 211, 102, .07);
+            font-size: 36px;
+            animation: pop .55s cubic-bezier(.34, 1.56, .64, 1) both
+        }
+
+        @keyframes pop {
+            from {
+                opacity: 0;
+                transform: scale(.6)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        h1 {
+            font-size: clamp(26px, 4.2vw, 44px);
+            line-height: 1.1;
+            letter-spacing: -.02em
+        }
+
+        h1 span {
+            color: var(--green)
+        }
+
+        .lede {
+            font-size: clamp(14px, 1.6vw, 17px);
+            line-height: 1.6;
+            color: #cfe3da;
+            max-width: 58ch
+        }
+
+        .lede b {
+            color: #fff
+        }
+
+        /* next steps — plain rows, no nested boxes */
+        .steps {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            gap: 0;
+            margin-top: clamp(26px, 4vw, 40px);
+            border-top: 1px solid rgba(255, 255, 255, .09)
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 16px;
+            align-items: start;
+            padding: clamp(16px, 2.4vw, 22px) 2px;
+            border-bottom: 1px solid rgba(255, 255, 255, .09);
+            opacity: 0;
+            transform: translateY(10px);
+            animation: rise .5s cubic-bezier(.16, 1, .3, 1) forwards;
+            animation-delay: calc(var(--i) * 110ms + 200ms)
+        }
+
+        @keyframes rise {
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .step .n {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--green);
+            border: 1px solid rgba(37, 211, 102, .4);
+            background: rgba(37, 211, 102, .09)
+        }
+
+        .step b {
+            display: block;
+            font-size: clamp(15px, 1.7vw, 17.5px);
+            margin-bottom: 4px
+        }
+
+        .step p {
+            font-size: clamp(13px, 1.45vw, 15px);
+            line-height: 1.6;
+            color: #b9cdc5
+        }
+
+        .cta-row {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: clamp(24px, 3.6vw, 34px)
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 24px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 800;
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: transform .18s ease, box-shadow .18s ease, background .18s ease
+        }
+
+        .btn[hidden] {
+            display: none
+        }
+
+        .btn:active {
+            transform: translateY(1px)
+        }
+
+        .btn-primary {
+            color: #06251a;
+            background: linear-gradient(180deg, #2ee06f, var(--green-deep));
+            box-shadow: 0 16px 34px -14px rgba(37, 211, 102, .6)
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px)
+        }
+
+        .btn-ghost {
+            color: #dcece5;
+            border-color: rgba(255, 255, 255, .16);
+            background: rgba(255, 255, 255, .04)
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, .08)
+        }
+
+        .foot {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: clamp(24px, 3.6vw, 34px);
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, .09)
+        }
+
+        .foot img {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: 45% 6%;
+            border: 1px solid rgba(37, 211, 102, .35)
+        }
+
+        .foot b {
+            display: block;
+            font-size: 15px
+        }
+
+        .foot span {
+            font-size: 12px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: #86a99a;
+            font-weight: 600
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            .tick,
+            .step {
+                animation: none;
+                opacity: 1;
+                transform: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="wrap">
+        <div class="ty">
+            <div class="ty-head">
+                <div class="tick"><i class="ph-bold ph-check"></i></div>
+                <h1 id="tyTitle">आपकी Seat <span>Reserve हो गई!</span></h1>
+                <p class="lede">Automate &amp; Scale with WhatsApp Masterclass में आपका registration confirm हो चुका
+                    है. Masterclass का <b>joining link और reminder</b> आपके WhatsApp number पर भेज दिया जाएगा.</p>
+            </div>
+
+            <div class="steps">
+                <div class="step" style="--i:0">
+                    <span class="n">1</span>
+                    <div>
+                        <b>WhatsApp पर confirmation देखें</b>
+                        <p>अगले कुछ minutes में आपको confirmation message मिलेगा. Message को reply करके save कर लें ताकि
+                            reminder आप तक पहुँचे.</p>
+                    </div>
+                </div>
+                <div class="step" style="--i:1">
+                    <span class="n">2</span>
+                    <div>
+                        <b>DV Sir का number save करें</b>
+                        <p>Number save रहने पर reminder और joining link filter में नहीं जाते — इससे आप live session miss
+                            नहीं करेंगे.</p>
+                    </div>
+                </div>
+                <div class="step" style="--i:2">
+                    <span class="n">3</span>
+                    <div>
+                        <b>Session से पहले notebook तैयार रखें</b>
+                        <p>Masterclass में जो automation setup live दिखाया जाएगा, उसे अपने business पर उसी दिन apply कर
+                            सकें — notes साथ रखें.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-row">
+                <a class="btn btn-primary" id="waBtn" href="#" hidden>
+                    <i class="ph-bold ph-whatsapp-logo"></i> WhatsApp पर message देखें
+                </a>
+                <a class="btn btn-ghost" href="index.html">
+                    <i class="ph-bold ph-arrow-left"></i> Masterclass page पर वापस जाएँ
+                </a>
+            </div>
+
+            <div class="foot">
+                <img src="Images/profile.webp" alt="Dipanshu Vijay (DV Sir)" width="1024" height="926" />
+                <div>
+                    <b>Dipanshu Vijay</b>
+                    <span>Your Automation Coach</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        (function () {
+            /* set this to the WhatsApp chat/group link to show the primary CTA */
+            var WA_LINK = '';
+
+            var wa = document.getElementById('waBtn');
+            if (WA_LINK) { wa.href = WA_LINK; wa.hidden = false; }
+
+            /* greet by first name — passed as ?n= by the form, or kept in sessionStorage */
+            var name = '';
+            try {
+                name = new URLSearchParams(location.search).get('n') || '';
+                if (!name) {
+                    var saved = JSON.parse(sessionStorage.getItem('dv_lead') || '{}');
+                    name = (saved.full_name || '').split(' ')[0] || '';
+                }
+            } catch (e) { }
+
+            name = name.replace(/[^A-Za-zऀ-ॿ .'-]/g, '').trim().slice(0, 24);
+            if (name) {
+                document.getElementById('tyTitle').innerHTML =
+                    name.replace(/</g, '&lt;') + ', आपकी Seat <span>Reserve हो गई!</span>';
+            }
+        })();
+    </script>
+</body>
+
+</html>
